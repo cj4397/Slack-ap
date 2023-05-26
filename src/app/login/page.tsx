@@ -18,6 +18,39 @@ export default function Login() {
         //     email: email,
         //     password: password
         // })
+        async function apitry() {
+
+            const response = await fetch('http://206.189.91.54/api/v1/auth/sign_in', {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+                referrerPolicy: "no-referrer",
+                body: JSON.stringify(
+                    {
+                        email: "user1@example.com",
+                        password: "12345678",
+                        password_confirmation: "12345678"
+                    }
+                )
+            });
+            const data = await response.json();
+            console.log(data);
+        }
+
+        apitry();
+        async function api() {
+
+            const response = await fetch('http://206.189.91.54/api/v1/auth/');
+            const data = await response.json();
+            console.log(data);
+        }
+        api()
+
     }
 
     const handleSubmit_sign_up = (e: any) => {
@@ -27,6 +60,10 @@ export default function Login() {
         //         email: email,
         //         password: password
         //     })
+
+
+
+
     }
 
 
