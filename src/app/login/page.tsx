@@ -34,7 +34,7 @@ export default function Login() {
             },
             body: JSON.stringify(
                 {
-                    name: 'name',
+
                     email: email,
                     password: password,
                     password_confirmation: password
@@ -74,11 +74,7 @@ export default function Login() {
 
     const handleSubmit_sign_up = (e: any) => {
         e.preventDefault();
-        //     signup({
-        //         name: name,
-        //         email: email,
-        //         password: password
-        //     })
+
 
         async function apitry() {
 
