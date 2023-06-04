@@ -20,7 +20,7 @@ export default function Dashboardlayout(
                         <Stack id="sidenav">
                             <Link href={'/dashboard'}>Home</Link>
                             <Link href={'/dashboard/DM'}>Direct Message</Link>
-                            <Link href={'/dashboard/search'}>Search</Link>
+                            <Link href={'/dashboard/GroupChat'}>GroupChat</Link>
                             <Link href={'/dashboard/profile'}>Profile</Link>
                         </Stack>
                     </Grid2>

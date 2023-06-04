@@ -1,7 +1,6 @@
 
 
-
-export default function Searchlayout(
+export default function DMlayout(
     props: {
         children: React.ReactNode
     }
