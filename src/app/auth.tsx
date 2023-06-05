@@ -1,11 +1,11 @@
 'use client';
 
-import { createContext, useContext, useMemo } from "react";
+import { useMemo } from "react";
 
 import useLocalStorage from "@/app/Storage";
 
 
-export function datas() {
+export function Datas() {
 
 
     const [user, setUser] = useLocalStorage("User", null)

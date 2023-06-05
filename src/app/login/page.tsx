@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { useState, useEffect } from "react";
 // import { useAuth } from "../auth";
-import { datas } from "../auth";
+import { Datas } from "../auth";
 import './login.css'
 
 export default function Login() {
@@ -17,7 +17,7 @@ export default function Login() {
 
     // const { login } = useAuth()
 
-    const { login } = datas()
+    const { login } = Datas()
 
     const [slide, setSlide] = useState(false)
 

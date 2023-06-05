@@ -3,18 +3,19 @@
 import { useEffect, useState } from "react";
 import { Dialog } from "@mui/material";
 import { DialogContent } from "@mui/material";
-import { database } from "@/app/fetchings";
+import { Database } from "@/app/fetchings";
+import { Datas } from "@/app/auth";
 
 
 
 export default function DM() {
-    const { getChannels, joinGroupAPI } = database()
+    const { getChannels, joinGroupAPI } = Database()
     const [channels, setChannels] = useState([])
     const [groupId, setGroupId] = useState(null)
     const [groupName, setGroupName] = useState()
     const [open, setOpen] = useState(false)
     const [msopen, setMSOpen] = useState(false)
-
+    const [createGC, setCreateGC] = useState(false)
 
     useEffect(() => {
         async function getCH() {
@@ -35,8 +36,6 @@ export default function DM() {
         setGroupName(id.name)
         setMSOpen(true)
     }
-
-
 
     const joinGroup = (id: any) => {
         joinGroupAPI(id)
@@ -63,7 +62,8 @@ export default function DM() {
 
     return (
         <>Search panel
-
+            <button onClick={() => setCreateGC(true)}>Create Group Chat</button>
+            <CreateGroup open={createGC} setOpen={setCreateGC}></CreateGroup>
 
             {make_list}
             <DetailModal groupId={groupId} open={open} setOpen={setOpen}></DetailModal>
@@ -76,7 +76,7 @@ export default function DM() {
 
 function DetailModal(props: any) {
     const { open, setOpen, groupId } = props
-    const { getDetails } = database()
+    const { getDetails } = Database()
     const [groupDetails, setGroupDetails]: any = useState(null)
 
     const handleClose = () => {
@@ -134,7 +134,7 @@ function DetailModal(props: any) {
 function ReceiveMessage(props: any) {
     const { open, setOpen, groupId, groupName } = props
 
-    const { sendMessageAPI, getMessage } = database()
+    const { sendMessageAPI, getMessage } = Database()
     const [groupMessages, setGroupMessages]: any = useState(null)
     const [message, setMessage] = useState('')
 
@@ -198,6 +198,52 @@ function ReceiveMessage(props: any) {
                     </DialogContent>
                     <button type="submit">Submit</button>
                     <input type="submit" value="Send Request" />
+                </form>
+            </Dialog>
+        </>
+    )
+}
+
+function CreateGroup(props: any) {
+    const { open, setOpen } = props
+    const { user } = Datas()
+    const { createGroupAPI } = Database()
+    const [groupName, setGroupName]: any = useState(null)
+
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+
+
+    const submitHandler = (e: any) => {
+        e.preventDefault();
+        createGroupAPI({ name: groupName, id: user.id })
+
+    }
+
+
+
+    return (
+        <>
+            <Dialog open={open} onClose={handleClose}>
+                <form onSubmit={submitHandler}>
+                    <DialogContent>
+                        <h1>To <strong><i>Create Group</i></strong>:</h1>
+
+
+
+                        <input
+                            type="text"
+                            name="body" id=""
+                            onChange={(e: any) => setGroupName(e.target.value)}
+                        />
+
+                    </DialogContent>
+                    <button type="submit">Submit</button>
+
                 </form>
             </Dialog>
         </>

@@ -1,15 +1,15 @@
 'use client';
-import { datas } from "@/app/auth";
+import { Datas } from "@/app/auth";
 import { useEffect, useState } from "react";
 
 import { Dialog } from "@mui/material";
 import { DialogContent } from "@mui/material";
-import { database } from "@/app/fetchings";
+import { Database } from "@/app/fetchings";
 
 
 export default function Seach() {
-    const { getUsers } = database()
-    const { addFriend } = datas()
+    const { getUsers } = Database()
+    const { addFriend } = Datas()
     const [userList, setUserList] = useState([])
     const [userId, setUserid] = useState(null)
     const [userEmail, setUseriEmail] = useState()
@@ -64,8 +64,8 @@ export default function Seach() {
 
 function Modal(props: any) {
     const { open, setOpen, userId, userEmail } = props
-    const { user } = datas()
-    const { getMessageUser, sendMessageAPIUser } = database()
+    const { user } = Datas()
+    const { getMessageUser, sendMessageAPIUser } = Database()
     const [message, setMessage] = useState()
     const [chat, setChat] = useState([])
 

@@ -1,10 +1,10 @@
 'use client';
 import Link from "next/link"
-import { datas } from "../auth";
+import { Datas } from "../auth";
 
 
 export default function Dashboard() {
-    const { logout } = datas()
+    const { logout } = Datas()
 
 
 

@@ -1,14 +1,14 @@
-import { datas } from "./auth"
+import { Datas } from "./auth"
 import { useMemo } from "react"
 
-export function database() {
-    const { user_data } = datas()
+export function Database() {
+    const { user_data } = Datas()
     const { token, client, expiry, uid } = user_data
 
 
 
     const createGroupAPI = async (id: any) => {
-        const send = await fetch('http://206.189.91.54/api/v1/channel/add_member', {
+        const send = await fetch('http://206.189.91.54/api/v1/channels', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -20,7 +20,7 @@ export function database() {
             body: JSON.stringify(
                 {
                     name: id.name,
-                    user_ids: id.id
+                    user_ids: [id.id]
                 }
             )
         })
