@@ -42,30 +42,30 @@ export default function DM() {
     }
 
 
-
-    const make_list = channels.map((e: any) => (
-
-
-        <div key={e.id}>
-
-            <div>
-                <p><b>{e.name}</b></p>
-                <p>Group ID: {e.id}</p>
-                <p>Made By: {e.owner_id}</p>
-            </div>
-            <button onClick={() => details(e.id)}>Group Details</button>
-            <button onClick={() => groupMessages({ id: e.id, name: e.name })}>Group Messages</button>
-            <button onClick={() => joinGroup(e.id)}>Join Group</button>
-        </div>
-    ))
-
-
     return (
         <>Search panel
             <button onClick={() => setCreateGC(true)}>Create Group Chat</button>
             <CreateGroup open={createGC} setOpen={setCreateGC}></CreateGroup>
 
-            {make_list}
+            {channels !== undefined ? (channels.map((e: any) => (
+
+                <div key={e.id}>
+
+                    <div>
+                        <p><b>{e.name}</b></p>
+                        <p>Group ID: {e.id}</p>
+                        <p>Made By: {e.owner_id}</p>
+                    </div>
+                    <button onClick={() => details(e.id)}>Group Details</button>
+                    <button onClick={() => groupMessages({ id: e.id, name: e.name })}>Group Messages</button>
+                    <button onClick={() => joinGroup(e.id)}>Join Group</button>
+                </div>
+
+            ))) :
+                <h1>Their  is no Joined Group</h1>
+            }
+
+
             <DetailModal groupId={groupId} open={open} setOpen={setOpen}></DetailModal>
 
             <ReceiveMessage groupName={groupName} groupId={groupId} open={msopen} setOpen={setMSOpen}></ReceiveMessage>
@@ -93,8 +93,6 @@ function DetailModal(props: any) {
         if (groupId !== null) {
             final(groupId)
         }
-
-        console.log('shange')
     }, [groupId])
 
     const time = (date: any) => {
@@ -122,7 +120,12 @@ function DetailModal(props: any) {
                                 <p>{e.user_id}</p>
                             </div>
                         ))}</div>
+
+
+
                     </div>
+
+
                 }
 
             </DialogContent>
