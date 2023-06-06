@@ -28,7 +28,7 @@ export function Database() {
 
     }
 
-    const joinGroupAPI = async (id: number) => {
+    const joinGroupAPI = async (id: any) => {
         const send = await fetch('http://206.189.91.54/api/v1/channel/add_member', {
             method: 'POST',
             headers: {
@@ -40,8 +40,8 @@ export function Database() {
             },
             body: JSON.stringify(
                 {
-                    id: id,
-                    member_id: id
+                    id: id.group,
+                    member_id: id.member
                 }
             )
         })

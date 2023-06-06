@@ -9,13 +9,14 @@ import { Datas } from "@/app/auth";
 
 
 export default function DM() {
-    const { getChannels, joinGroupAPI } = Database()
+    const { getChannels } = Database()
     const [channels, setChannels] = useState([])
     const [groupId, setGroupId] = useState(null)
-    const [groupName, setGroupName] = useState()
+    const [groupName, setGroupName] = useState('')
     const [open, setOpen] = useState(false)
     const [msopen, setMSOpen] = useState(false)
     const [createGC, setCreateGC] = useState(false)
+    const [addmember, setAddMember] = useState(false)
 
     useEffect(() => {
         async function getCH() {
@@ -37,8 +38,10 @@ export default function DM() {
         setMSOpen(true)
     }
 
-    const joinGroup = (id: any) => {
-        joinGroupAPI(id)
+    const addMember = (id: any) => {
+        setGroupName(id.name)
+        setGroupId(id.id)
+        setAddMember(true)
     }
 
 
@@ -58,7 +61,7 @@ export default function DM() {
                     </div>
                     <button onClick={() => details(e.id)}>Group Details</button>
                     <button onClick={() => groupMessages({ id: e.id, name: e.name })}>Group Messages</button>
-                    <button onClick={() => joinGroup(e.id)}>Join Group</button>
+                    <button onClick={() => addMember({ name: e.name, id: e.id })}>Add a Member</button>
                 </div>
 
             ))) :
@@ -70,6 +73,7 @@ export default function DM() {
 
             <ReceiveMessage groupName={groupName} groupId={groupId} open={msopen} setOpen={setMSOpen}></ReceiveMessage>
 
+            <AddGroupModal groupId={groupId} groupName={groupName} open={addmember} setOpen={setAddMember} />
         </>
     )
 }
@@ -250,5 +254,44 @@ function CreateGroup(props: any) {
                 </form>
             </Dialog>
         </>
+    )
+}
+
+function AddGroupModal(props: any) {
+    const { open, setOpen, groupName, groupId } = props
+    const [member, setMember] = useState()
+    const { joinGroupAPI } = Database()
+
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+    const submitHandler = (e: any) => {
+        e.preventDefault();
+        joinGroupAPI({ group: groupId, member: member })
+    }
+
+    return (
+        <Dialog open={open} onClose={handleClose}>
+            <form onSubmit={submitHandler}>
+                <DialogContent>
+                    <h1>To <strong><i>Add to Group:{groupName}</i></strong>:</h1>
+
+
+
+                    <input
+                        type="number"
+                        name="body" id=""
+                        onChange={(e: any) => setMember(e.target.value)}
+                    />
+
+                </DialogContent>
+
+                <button type="submit">Submit</button>
+
+            </form>
+        </Dialog>
     )
 }
