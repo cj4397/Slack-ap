@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
+
+
 import { useState, useEffect } from "react";
 // import { useAuth } from "../auth";
 import { Datas } from "../auth";
@@ -105,7 +107,7 @@ export default function Login() {
     }
     return (
         <>
-            <h1>Login page</h1>
+
 
 
             <main id="body">
@@ -132,7 +134,7 @@ export default function Login() {
 
                             <input id="user_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                             <input id="user_password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                            <a href="#">Forgot your password?</a>
+
                             <button >Sign In</button>
                         </form>
                     </div>

@@ -14,7 +14,7 @@ export default function Dashboardlayout(
     const { user } = Datas()
     const route = useRouter();
     if (user === null) {
-        return route.push('/')
+        return route.push('/login')
     }
     return (
         <>

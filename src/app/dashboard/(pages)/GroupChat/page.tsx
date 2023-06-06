@@ -119,7 +119,7 @@ function DetailModal(props: any) {
                         <p>Group Creation Date: {time(groupDetails.created_at)}</p>
                         <div>Group Members:  {groupDetails.channel_members.map((e: any) => (
                             <div key={e.id}>
-                                <p>{e.id}</p>
+                                <p>{e.user_id}</p>
                             </div>
                         ))}</div>
                     </div>
