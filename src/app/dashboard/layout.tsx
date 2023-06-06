@@ -3,12 +3,19 @@
 import Link from "next/link"
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
 import { Stack } from "@mui/material";
+import { Datas } from "../auth";
+import { useRouter } from 'next/navigation';
 
 export default function Dashboardlayout(
     props: {
         children: React.ReactNode
     }
 ) {
+    const { user } = Datas()
+    const route = useRouter();
+    if (user === null) {
+        return route.push('/')
+    }
     return (
         <>
             <section>
