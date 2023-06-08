@@ -1,19 +1,15 @@
-
-import styles from './page.module.css'
-import Link from 'next/link'
-
+import React from "react";
+import styles from "./page.module.css";
+import Link from "next/link";
+import Login from "./login/page";
 
 export default function Home() {
   return (
     <>
-      <h1> Main page</h1>
-
-
+      <h1>Slack-App Clone </h1>
       <nav>
-
-        <Link href={'/login'}> login</Link>
+        <Login />
       </nav>
-
     </>
-  )
+  );
 }
