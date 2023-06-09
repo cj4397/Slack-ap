@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid, Stack } from '@mui/material';
 import { useAuth } from '../Auth';
 import { useRouter } from 'next/navigation';
-// import { PrivateRoute } from '@/app/PrivateRoute';
+
 
 export default function DashboardLayout(props: { children: React.ReactNode }) {
   const { logout } = useAuth();
@@ -15,11 +15,9 @@ export default function DashboardLayout(props: { children: React.ReactNode }) {
   };
 
   return (
-<<<<<<< HEAD
-
     <section>
-      <Grid2 container spacing={2}>
-        <Grid2 xs={2}>
+      <Grid container spacing={2}>
+        <Grid item xs={2}>
           <Stack direction="column" spacing={2}>
             <button onClick={handleLogout}>Logout</button>
             <div>
@@ -30,35 +28,12 @@ export default function DashboardLayout(props: { children: React.ReactNode }) {
               <h1>Direct Messages</h1>
             </div>
           </Stack>
-        </Grid2>
-        <Grid2 xs={12} md={9}>
+        </Grid>
+        <Grid item xs={12} md={9}>
           {props.children}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </section>
 
-=======
-    // <PrivateRoute>
-      <section>
-        <Grid container spacing={2}>
-          <Grid item xs={2}>
-            <Stack direction="column" spacing={2}>
-              <button onClick={handleLogout}>Logout</button>
-              <div>
-                <h2>Channels</h2>
-                <button>Add Channel</button>
-              </div>
-              <div>
-                <h1>Direct Messages</h1>
-              </div>
-            </Stack>
-          </Grid>
-          <Grid item xs={12} md={9}>
-            {props.children}
-          </Grid>
-        </Grid>
-      </section>
-    // </PrivateRoute>
->>>>>>> main
   );
 }
