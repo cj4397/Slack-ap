@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { useState, useEffect } from "react";
 
-import { useAuth } from '../Auth';
+import { useAuth } from '../auth';
 import './login.css'
 
 

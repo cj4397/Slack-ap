@@ -1,7 +1,6 @@
-
 import './globals.css'
 
-import Auth from "./Auth";
+import Auth from "./auth";
 
 
 export const metadata = {
