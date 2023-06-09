@@ -1,77 +1,39 @@
-'use client';
-
-import { useMemo, createContext, useContext } from "react";
-
+'use client'
+import { useMemo } from "react";
 import useLocalStorage from "@/app/Storage";
 
+export function useAuth() {
+  const [user, setUser] = useLocalStorage("User", null);
+  const [userData, setUserData] = useLocalStorage("UserData", null);
+
+  const login = (data: { user_info?: object; user_data?: object }) => {
+    const { user_info, user_data } = data;
+    setUser(user_info);
+    setUserData(user_data);
+  };
+
+  const signup = (data: { user_info?: object; user_data?: object }) => {
+    const { user_info, user_data } = data;
+    setUser(user_info);
+    setUserData(user_data);
+  };
+
+  const logout = () => {
+    setUser(null);
+    setUserData(null);
+  };
 
 
-const AuthContext = createContext();
+  const value = useMemo(
+    () => ({
+      userData,
+      user,
+      signup,
+      login,
+      logout,
+    }),
+    [userData, user]
+  );
 
-export const useAuth = () => {
-    return useContext(AuthContext);
-};
-
-export default function Datas(props: {
-    children: React.ReactNode
-}) {
-
-
-
-    const [user, setUser] = useLocalStorage("User", null)
-    const [user_data, setUserData] = useLocalStorage("UserData", null)
-    const [userFriendList, setFriendList] = useLocalStorage("Friends", [])
-
-
-    const login = (data: any) => {
-        type data = {
-            user_info?: object;
-            user_data?: object;
-        };
-        console.log(data)
-        const { user_info, user_data } = data
-        setUser(user_info)
-        setUserData(user_data)
-    };
-
-    const signup = (data: any) => {
-        type data = {
-            user_info?: object;
-            user_data?: object;
-        };
-        const { user_info, user_data } = data
-        setUser(user_info)
-        setUserData(user_data)
-    };
-
-    const logout = () => {
-        setUser(null);
-        setUserData(null);
-    };
-
-    const addFriend = (data: any) => {
-        if (userFriendList.findIndex((e: any) => e === data) === -1) {
-            userFriendList.push(data)
-        }
-
-        setFriendList(userFriendList)
-    }
-
-
-    const value = useMemo(
-        () => ({
-            user_data,
-            user,
-            signup,
-            login,
-            logout,
-            addFriend,
-        }),
-        [user]
-    );
-
-    return <AuthContext.Provider value={value}> {props.children}</AuthContext.Provider>;
+  return value;
 }
-
-
-

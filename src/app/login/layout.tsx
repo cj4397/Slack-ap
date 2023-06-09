@@ -1,8 +1,12 @@
+import React from "react";
+import { PublicRoute } from '@/app/PublicRoute';
 
-export default function Loginlayout(
-    props: { children: React.ReactNode }) {
-
-    return (
-        <main>{props.children}</main>
-    )
+export default function LoginLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <PublicRoute>
+      <>
+      <main>{children}</main>
+      </>
+    </PublicRoute>
+  ) ;
 }

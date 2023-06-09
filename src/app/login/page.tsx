@@ -1,12 +1,16 @@
-'use client';
-
+'use client'
 import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useAuth } from "../Auth";
 
+<<<<<<< HEAD
 
 
 import { useState, useEffect } from "react";
 
 import { useAuth } from "../auth";
+=======
+>>>>>>> 0ef000a0c6c904cfd340f3ee14826c25af953aca
 import './login.css'
 
 
@@ -14,16 +18,37 @@ import './login.css'
 
 
 export default function Login() {
+<<<<<<< HEAD
 
 
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+=======
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const route = useRouter();
+  const { login } = useAuth();
+  const [slide, setSlide] = useState(false);
+>>>>>>> 0ef000a0c6c904cfd340f3ee14826c25af953aca
 
-    const route = useRouter();
+  const handleSubmitSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    const response = await fetch('http://206.189.91.54/api/v1/auth/sign_in', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      })
+    });
 
+<<<<<<< HEAD
     const { login } = useAuth()
 
     // const { login } = Datas()
@@ -81,99 +106,92 @@ export default function Login() {
 
 
             route.push('/dashboard')
+=======
+    const data = await response.json();
+>>>>>>> 0ef000a0c6c904cfd340f3ee14826c25af953aca
 
+    if (response.ok) {
+      login({
+        user_info: data,
+        user_data: {
+          accessToken: response.headers.get('Access-Token'),
+          password: password,
+          email: email,
+          client: response.headers.get('Client'),
+          expiry: response.headers.get('Expiry'),
+          uid: response.headers.get('Uid')
         }
+      });
 
-
+      route.push('/dashboard');
     }
+  }
 
-    const handleSubmit_sign_up = (e: any) => {
-        e.preventDefault();
+  const handleSubmitSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    const response = await fetch('http://206.189.91.54/api/v1/auth/', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        password_confirmation: password
+      })
+    });
 
-        async function apitry() {
+    const data = await response.json();
+    console.log(data);
+  }
 
-            const response = await fetch('http://206.189.91.54/api/v1/auth/', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(
-                    {
-                        name: name,
-                        email: email,
-                        password: password,
-                        password_confirmation: password
-                    }
-                )
-            });
-            const data = await response.json();
-            console.log(data);
-        }
-        apitry()
-    }
+  const slideAnimation = () => {
+    setSlide(!slide);
+  }
 
 
-
-    const slide_animation = () => {
-        setSlide(slide ? false : true)
-    }
-    return (
-        <>
-
-
-
-            <main id="body">
-                <div className={`container , ${slide ? 'right-panel-active' : ''}`} id="sidebar">
-                    <div className="form-container sign-up-container">
-                        <form onSubmit={handleSubmit_sign_up} autoComplete="on">
-                            <h1>Create Account</h1>
-
-                            <input id="new_name" type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
-                            <input id="new_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                            <input id="new_password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-
-                            <button >Sign Up</button>
-                        </form>
-                    </div>
-                    <div className="form-container sign-in-container">
-
-
-
-
-                        <form onSubmit={handleSubmit_sign_in}>
-                            <h1>Sign in</h1>
-
-
-                            <input id="user_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                            <input id="user_password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-
-                            <button >Sign In</button>
-                        </form>
-                    </div>
-                    <div className="overlay-container">
-                        <div className="overlay">
-                            <div className="overlay-panel overlay-left">
-                                <h1>Welcome Back!</h1>
-                                <p>To keep connected with us please login with your personal info</p>
-                                <button onClick={slide_animation} className="ghost"
-                                    id="signIn">Sign In</button>
-                            </div>
-                            <div className="overlay-panel overlay-right">
-                                <h1>Hello, Friend!</h1>
-                                <p>Enter your personal details and start journey with us</p>
-                                <button
-                                    onClick={slide_animation}
-
-                                    className="ghost" id="signUp">Sign Up</button>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    
+      <>
+        <h1>Login page</h1>
+        <main id="body">
+          <div className={`container ${slide ? 'right-panel-active' : ''}`} id="sidebar">
+            <div className="form-container sign-up-container">
+              <form onSubmit={handleSubmitSignUp} autoComplete="on">
+                <h1>Create Account</h1>
+                <input id="new_name" type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
+                <input id="new_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <input id="new_password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                <button>Sign Up</button>
+              </form>
+            </div>
+            <div className="form-container sign-in-container">
+              <form onSubmit={handleSubmitSignIn}>
+                <h1>Sign in</h1>
+                <input id="user_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <input id="user_password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                <a href="#">Forgot your password?</a>
+                <button>Sign In</button>
+              </form>
+            </div>
+            <div className="overlay-container">
+              <div className="overlay">
+                <div className="overlay-panel overlay-left">
+                  <h1>Welcome Back!</h1>
+                  <p>To keep connected with us please login with your personal info</p>
+                  <button onClick={slideAnimation} className="ghost" id="signIn">Sign In</button>
                 </div>
-
-
-            </main>
-
-        </>
-    )
+                <div className="overlay-panel overlay-right">
+                  <h1>Hello, Friend!</h1>
+                  <p>Enter your personal details and start the journey with us</p>
+                  <button onClick={slideAnimation} className="ghost" id="signUp">Sign Up</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </>
+    
+  );
 }
