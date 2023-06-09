@@ -20,3 +20,24 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+// ***********for chat conversation
+// const conversation = chat.map((e: any) => (
+//   <div key={e.id}>
+//     {e.receiver.id === user.data.id ? (
+//       <div className="receiver">
+//         <h4>{e.sender.email}</h4>
+//         <p>{e.body}</p>
+//         <span>{time(e.created_at)}</span>
+//       </div>
+//     ) : (
+//       <div className='sender'>
+//         <h4>{e.sender.email}</h4>
+//         <p>{e.body}</p>
+//         <span>{time(e.created_at)}</span>
+//       </div>
+//     )}
+
+//   </div>
+// ));
