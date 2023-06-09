@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-
-import './globals.css'
-
-import Datas from './auth'
-
-=======
 import React from "react";
 import "./globals.css";
->>>>>>> 0ef000a0c6c904cfd340f3ee14826c25af953aca
 
 export const metadata = {
   title: "Slack App",
@@ -21,11 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-<<<<<<< HEAD
-      <body><Datas>{children}</Datas></body>
-=======
       <body>{children}</body>
->>>>>>> 0ef000a0c6c904cfd340f3ee14826c25af953aca
     </html>
   );
 }
