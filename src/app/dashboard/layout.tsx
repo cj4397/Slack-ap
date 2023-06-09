@@ -2,7 +2,7 @@
 import Link from "next/link"
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
 import { Stack } from "@mui/material";
-import { useAuth } from '../Auth';
+import { useAuth } from '../auth';
 import { useRouter } from 'next/navigation';
 
 export default function Dashboardlayout(

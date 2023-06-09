@@ -1,4 +1,4 @@
-import DirectMessagePage from "./(Pages)/DirectMessage/page"
+import DirectMessagePage from "./(pages)/DirectMessage/page"
 export default function Dashboard() {
 
   return (

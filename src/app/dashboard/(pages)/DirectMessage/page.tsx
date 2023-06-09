@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "@mui/material";
 import { useDatabase } from "@/app/fetchings";
-import { useAuth } from "@/app/Auth";
+import { useAuth } from "@/app/auth";
 
 export default function DirectMessagePage() {
     const { getUsers } = useDatabase();
