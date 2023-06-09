@@ -1,11 +1,17 @@
 'use client';
-
-import { useMemo } from "react";
+import { useMemo, createContext, useContext } from "react";
 
 import useLocalStorage from "@/app/Storage";
 
+const AuthContext = createContext();
 
-export function Datas() {
+export const useAuth = () => {
+    return useContext(AuthContext);
+};
+
+export function Datas(props: {
+    children: React.ReactNode
+}) {
 
 
     const [user, setUser] = useLocalStorage("User", null)
@@ -62,6 +68,6 @@ export function Datas() {
 
     console.log('hi')
 
-    return value
+    return <AuthContext.Provider value={value}> {props.children}</AuthContext.Provider>
 
 }
