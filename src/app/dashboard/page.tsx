@@ -63,9 +63,9 @@ const DashboardPage: React.FC = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      {error ? <p>{error}</p> : null}
+      {error && <p>{error}</p>}
       <Search onSearch={handleSearch} />
-      {searchTerm && filteredUsers.length > 0 ? (
+      {searchTerm && filteredUsers.length > 0 && (
         <ul>
           {filteredUsers.map((user) => (
             <li key={user.id}>
@@ -74,7 +74,7 @@ const DashboardPage: React.FC = () => {
             </li>
           ))}
         </ul>
-      ) : null}
+      )}
       {selectedUser && (
         <div>
           <p>Sending message to: {selectedUser.email}</p>
