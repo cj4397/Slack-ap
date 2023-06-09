@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
 import { Stack } from "@mui/material";
-import { Datas } from "../auth";
+import { useAuth } from "../auth";
 import { useRouter } from 'next/navigation';
 
 export default function Dashboardlayout(
@@ -11,10 +11,10 @@ export default function Dashboardlayout(
         children: React.ReactNode
     }
 ) {
-    const { user } = Datas()
+    const { user } = useAuth()
     const route = useRouter();
     if (user === null) {
-        return route.push('/login')
+        return route.push('/')
     }
     return (
         <>

@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { Dialog } from "@mui/material";
 import { DialogContent } from "@mui/material";
-import { Database } from "@/app/fetchings";
-import { Datas } from "@/app/auth";
+import { useDatabase } from "@/app/fetchings";
+import { useAuth } from "@/app/auth";
 
 
 
 export default function DM() {
-    const { getChannels } = Database()
+    const { getChannels } = useDatabase()
     const [channels, setChannels] = useState([])
     const [groupId, setGroupId] = useState(null)
     const [groupName, setGroupName] = useState('')
@@ -80,7 +80,7 @@ export default function DM() {
 
 function DetailModal(props: any) {
     const { open, setOpen, groupId } = props
-    const { getDetails } = Database()
+    const { getDetails } = useDatabase()
     const [groupDetails, setGroupDetails]: any = useState(null)
 
     const handleClose = () => {
@@ -141,7 +141,7 @@ function DetailModal(props: any) {
 function ReceiveMessage(props: any) {
     const { open, setOpen, groupId, groupName } = props
 
-    const { sendMessageAPI, getMessage } = Database()
+    const { sendMessageAPI, getMessage } = useDatabase()
     const [groupMessages, setGroupMessages]: any = useState(null)
     const [message, setMessage] = useState('')
 
@@ -213,8 +213,8 @@ function ReceiveMessage(props: any) {
 
 function CreateGroup(props: any) {
     const { open, setOpen } = props
-    const { user } = Datas()
-    const { createGroupAPI } = Database()
+    const { user } = useAuth()
+    const { createGroupAPI } = useDatabase()
     const [groupName, setGroupName]: any = useState(null)
 
 
@@ -260,7 +260,7 @@ function CreateGroup(props: any) {
 function AddGroupModal(props: any) {
     const { open, setOpen, groupName, groupId } = props
     const [member, setMember] = useState()
-    const { joinGroupAPI } = Database()
+    const { joinGroupAPI } = useDatabase()
 
 
     const handleClose = () => {

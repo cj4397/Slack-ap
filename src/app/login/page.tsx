@@ -5,11 +5,18 @@ import { useRouter } from 'next/navigation';
 
 
 import { useState, useEffect } from "react";
-// import { useAuth } from "../auth";
-import { Datas } from "../auth";
+
+import { useAuth } from "../auth";
 import './login.css'
 
+
+
+
+
 export default function Login() {
+
+
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,9 +24,9 @@ export default function Login() {
     const route = useRouter();
 
 
-    // const { login } = useAuth()
+    const { login } = useAuth()
 
-    const { login } = Datas()
+    // const { login } = Datas()
 
     const [slide, setSlide] = useState(false)
 
@@ -46,18 +53,13 @@ export default function Login() {
 
         const data = await response.json()
 
-        // console.log(response.ok)
-        // console.log(data);
-        // console.log(response.headers.get('Expiry'));
-        // console.log(response.headers.get('Access-Token'));
-        // console.log(response.headers.get('Uid'));
 
 
         if (response.ok) {
             login({
                 user_info: data,
                 user_data: {
-                    token: response.headers.get('Access-Token'),
+                    accessToken: response.headers.get('Access-Token'),
                     password: password,
                     email: email,
                     client: response.headers.get('Client'),
@@ -66,6 +68,17 @@ export default function Login() {
                 }
             }
             )
+
+            dotenv.populate(process.env, { ACCESS_TOKEN: response.headers.get('Access-Token') })
+
+            dotenv.populate(process.env, { CLIENT: response.headers.get('Client') })
+
+
+            dotenv.populate(process.env, { EXPIRY: response.headers.get('Expiry') })
+
+
+            dotenv.populate(process.env, { UID: response.headers.get('Uid') })
+
 
             route.push('/dashboard')
 
