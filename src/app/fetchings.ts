@@ -22,28 +22,25 @@ export function useDatabase() {
       options.body = JSON.stringify(body);
     }
 
-    const response = await fetch(url, options);
-    return response.json();
-  };
-
-  const createGroupAPI = async (id: any) => {
-    const url = "http://206.189.91.54/api/v1/channels";
-    const method = "POST";
-    const body = {
-      name: id.name,
-      user_ids: [id.id],
-    };
-
-    return fetchApi(url, method, body);
-  };
-
-  const joinGroupAPI = async (id: number) => {
-    const url = "http://206.189.91.54/api/v1/channel/add_member";
-    const method = "POST";
-    const body = {
-      id: id,
-      member_id: id,
-    };
+    const joinGroupAPI = async (id: number) => {
+        const send = await fetch('http://206.189.91.54/api/v1/channel/add_member', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                'access-token': token,
+                'client': client,
+                'expiry': expiry,
+                'uid': uid,
+            },
+            body: JSON.stringify(
+                {
+                    id: id,
+                    member_id: id
+                }
+            )
+        })
+        const body = await send.json()
+        console.log(body)
 
     return fetchApi(url, method, body);
   };
