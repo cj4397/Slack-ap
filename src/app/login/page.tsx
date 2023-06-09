@@ -1,13 +1,11 @@
 'use client'
+
+
 import { useRouter } from 'next/navigation';
-import { useState } from "react";
-import { useAuth } from "../Auth";
-
-
 
 import { useState, useEffect } from "react";
 
-import { useAuth } from "../auth";
+import { useAuth } from '../Auth';
 import './login.css'
 
 
