@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 'use client';
+
 import { useMemo, createContext, useContext } from "react";
-=======
-'use client'
-import { useMemo } from "react";
->>>>>>> main
+
 import useLocalStorage from "@/app/Storage";
 
 const AuthContext = createContext();
