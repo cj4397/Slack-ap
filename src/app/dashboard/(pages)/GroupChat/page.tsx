@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Dialog } from "@mui/material";
 import { DialogContent } from "@mui/material";
 import { useDatabase } from "@/app/fetchings";
-import { useAuth } from "@/app/auth";
+import { useAuth } from "@/app/Auth";
 
 
 

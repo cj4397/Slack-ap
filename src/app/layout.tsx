@@ -1,7 +1,7 @@
 
 import './globals.css'
 
-import Datas from './auth'
+import Auth from "./Auth";
 
 
 export const metadata = {
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* <body>{children}</body> */}
-      <body><Datas>{children}</Datas></body>
+      <body><Auth>{children}</Auth></body>
     </html>
   );
 }

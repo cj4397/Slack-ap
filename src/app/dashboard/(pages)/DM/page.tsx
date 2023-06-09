@@ -1,5 +1,5 @@
 'use client';
-import { useAuth } from "@/app/auth";
+import { useAuth } from "@/app/Auth";
 import { useEffect, useState } from "react";
 
 import { Dialog } from "@mui/material";
