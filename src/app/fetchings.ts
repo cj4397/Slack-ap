@@ -27,7 +27,7 @@ export function useDatabase() {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                'access-token': token,
+                'access-token': accessToken,
                 'client': client,
                 'expiry': expiry,
                 'uid': uid,
