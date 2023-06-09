@@ -9,9 +9,9 @@ export function useDatabase() {
         const headers = {
             "Content-Type": "application/json",
             "access-token": accessToken,
-            "client": client,
-            "expiry": expiry,
-            "uid": uid,
+            client,
+            expiry,
+            uid,
         };
 
         const options: RequestInit = {
@@ -23,105 +23,110 @@ export function useDatabase() {
             options.body = JSON.stringify(body);
         }
 
-        const createGroupAPI = async (name: string, user_ids: number[]) => {
-            const url = "http://206.189.91.54/api/v1/channels";
-            const method = "POST";
-            const body = {
-                name,
-                user_ids,
-            };
+        const response = await fetch(url, options);
+        return response.json();
+    };
 
-            return fetchApi(url, method, body);
+
+    const createGroupAPI = async (name: string, user_ids: number[]) => {
+        const url = "http://206.189.91.54/api/v1/channels";
+        const method = "POST";
+        const body = {
+            name,
+            user_ids,
         };
 
-        const joinGroupAPI = async (id: number) => {
-            const send = await fetch('http://206.189.91.54/api/v1/channel/add_member', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    'access-token': accessToken,
-                    'client': client,
-                    'expiry': expiry,
-                    'uid': uid,
-                },
-                body: JSON.stringify({
-                    id: id,
-                    member_id: id
-                })
-            });
-            const responseBody = await send.json();
-            console.log(responseBody);
+        return fetchApi(url, method, body);
+    };
+
+    const joinGroupAPI = async (id: number) => {
+        const send = await fetch('http://206.189.91.54/api/v1/channel/add_member', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                'access-token': accessToken,
+                'client': client,
+                'expiry': expiry,
+                'uid': uid,
+            },
+            body: JSON.stringify({
+                id: id,
+                member_id: id
+            })
+        });
+        const responseBody = await send.json();
+        console.log(responseBody);
+    };
+
+    const sendMessageAPI = async (data: any) => {
+        const url = "http://206.189.91.54/api/v1/messages";
+        const method = "POST";
+        const body = {
+            receiver_id: data.groupId,
+            receiver_class: "Channel",
+            body: String(data.message),
         };
 
-        const sendMessageAPI = async (data: any) => {
-            const url = "http://206.189.91.54/api/v1/messages";
-            const method = "POST";
-            const body = {
-                receiver_id: data.groupId,
-                receiver_class: "Channel",
-                body: String(data.message),
-            };
+        return fetchApi(url, method, body);
+    };
 
-            return fetchApi(url, method, body);
+    const sendMessageAPIUser = async (data: any): Promise<any> => {
+        const url = "http://206.189.91.54/api/v1/messages";
+        const method = "POST";
+        const body = {
+            receiver_id: data.userId,
+            receiver_class: "User",
+            body: String(data.message),
         };
 
-        const sendMessageAPIUser = async (data: any): Promise<any> => {
-            const url = "http://206.189.91.54/api/v1/messages";
-            const method = "POST";
-            const body = {
-                receiver_id: data.userId,
-                receiver_class: "User",
-                body: String(data.message),
-            };
+        return fetchApi(url, method, body);
+    };
 
-            return fetchApi(url, method, body);
-        };
+    const getChannels = async () => {
+        const url = "http://206.189.91.54/api/v1/channels";
+        const method = "GET";
 
-        const getChannels = async () => {
-            const url = "http://206.189.91.54/api/v1/channels";
-            const method = "GET";
+        return fetchApi(url, method);
+    };
 
-            return fetchApi(url, method);
-        };
+    const getDetails = async (id: any) => {
+        const url = `http://206.189.91.54/api/v1/channels/${id}`;
+        const method = "GET";
 
-        const getDetails = async (id: any) => {
-            const url = `http://206.189.91.54/api/v1/channels/${id}`;
-            const method = "GET";
+        return fetchApi(url, method);
+    };
 
-            return fetchApi(url, method);
-        };
+    const getMessage = async (id: any) => {
+        const url = `http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=Channel`;
+        const method = "GET";
 
-        const getMessage = async (id: any) => {
-            const url = `http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=Channel`;
-            const method = "GET";
+        return fetchApi(url, method);
+    };
 
-            return fetchApi(url, method);
-        };
+    const getUsers = async (): Promise<any> => {
+        const url = "http://206.189.91.54/api/v1/users";
+        const method = "GET";
 
-        const getUsers = async (): Promise<any> => {
-            const url = "http://206.189.91.54/api/v1/users";
-            const method = "GET";
+        return fetchApi(url, method);
+    };
 
-            return fetchApi(url, method);
-        };
+    const getMessageUser = async (id: any) => {
+        const url = `http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=User`;
+        const method = "GET";
 
-        const getMessageUser = async (id: any) => {
-            const url = `http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=User`;
-            const method = "GET";
+        return fetchApi(url, method);
+    };
 
-            return fetchApi(url, method);
-        };
-
-        return {
-            createGroupAPI,
-            joinGroupAPI,
-            sendMessageAPI,
-            sendMessageAPIUser,
-            getChannels,
-            getDetails,
-            getMessage,
-            getUsers,
-            getMessageUser,
-        };
-    }
+    return {
+        createGroupAPI,
+        joinGroupAPI,
+        sendMessageAPI,
+        sendMessageAPIUser,
+        getChannels,
+        getDetails,
+        getMessage,
+        getUsers,
+        getMessageUser,
+    };
 }
+

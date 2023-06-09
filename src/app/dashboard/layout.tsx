@@ -10,7 +10,7 @@ export default function Dashboardlayout(
     children: React.ReactNode
   }
 ) {
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
   const route = useRouter();
   if (user === null) {
     return route.push('/login')
@@ -24,10 +24,10 @@ export default function Dashboardlayout(
             <h1>Side Navaigation</h1>
 
             <Stack id="sidenav">
-              <Link href={'/dashboard'}>Home</Link>
-              <Link href={'/dashboard/DM'}>Direct Message</Link>
-              <Link href={'/dashboard/GroupChat'}>GroupChat</Link>
-              <Link href={'/dashboard/profile'}>Profile</Link>
+
+              <Link href={'/dashboard/DirectMessage'}>Direct Message</Link>
+              <Link href={'/dashboard/Channels'}>GroupChat</Link>
+              <Link href={'/'} onClick={() => logout()}>Log Out</Link>
             </Stack>
           </Grid2>
           <Grid2 xs={9}>

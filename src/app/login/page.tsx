@@ -89,7 +89,7 @@ export default function Login() {
                             <input id="new_name" type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
                             <input id="new_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                             <input id="new_password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                            <button>Sign Up</button>
+                            <button className='login'>Sign Up</button>
                         </form>
                     </div>
                     <div className="form-container sign-in-container">
@@ -98,7 +98,7 @@ export default function Login() {
                             <input id="user_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                             <input id="user_password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                             <a href="#">Forgot your password?</a>
-                            <button>Sign In</button>
+                            <button className='login'>Sign In</button>
                         </form>
                     </div>
                     <div className="overlay-container">
@@ -106,12 +106,12 @@ export default function Login() {
                             <div className="overlay-panel overlay-left">
                                 <h1>Welcome Back!</h1>
                                 <p>To keep connected with us please login with your personal info</p>
-                                <button onClick={slideAnimation} className="ghost" id="signIn">Sign In</button>
+                                <button onClick={slideAnimation} className="ghost login" id="signIn">Sign In</button>
                             </div>
                             <div className="overlay-panel overlay-right">
                                 <h1>Hello, Friend!</h1>
                                 <p>Enter your personal details and start the journey with us</p>
-                                <button onClick={slideAnimation} className="ghost" id="signUp">Sign Up</button>
+                                <button onClick={slideAnimation} className="ghost login" id="signUp">Sign Up</button>
                             </div>
                         </div>
                     </div>

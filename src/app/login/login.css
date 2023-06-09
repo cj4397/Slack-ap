@@ -10,28 +10,8 @@
     height: 100vh;
 }
 
-h1 {
-    font-weight: bold;
-    margin: 0;
-}
 
-h2 {
-    text-align: center;
-}
-
-p {
-    font-size: 14px;
-    font-weight: 100;
-    line-height: 20px;
-    letter-spacing: 0.5px;
-    margin: 20px 0 30px;
-}
-
-span {
-    font-size: 12px;
-}
-
-button {
+.login {
     border-radius: 20px;
     border: 3px solid #785A28;
     background-color: #0A323C;
@@ -45,52 +25,30 @@ button {
     transition: all 1s;
 }
 
-button:hover {
+login:hover {
     transform: scale(0.95);
     border: 3px solid #C89B3C;
     background-color: #0397AB;
     color: #010A13;
 }
 
-button:focus {
+login:focus {
     outline: none;
 }
 
-button.ghost {
+login.ghost {
     background-color: transparent;
     border-color: #C89B3C;
 
 }
 
-button.ghost:hover {
+login.ghost:hover {
     background-color: #0A323C;
     border-color: #C89B3C;
 
 }
 
-form {
-    background-color: #1E282D;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 50px;
-    height: 100%;
-    text-align: center;
-}
 
-input {
-    background-color: #A09B8C;
-    border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
-    width: 100%;
-    color: #091428
-}
-
-input::placeholder {
-    color: #0A1428
-}
 
 .container {
     border: 2px solid #C89B3C;
@@ -226,29 +184,4 @@ input::placeholder {
     margin: 0 5px;
     height: 40px;
     width: 40px;
-}
-
-footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
 }
