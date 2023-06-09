@@ -1,10 +1,19 @@
-'use client';
+
 import styles from './page.module.css'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation';
+
 
 export default function Home() {
-  const route = useRouter();
-  return route.push('/login')
+  return (
+    <>
+      <h1> Main page</h1>
 
+
+      <nav>
+
+        <Link href={'/login'}> login</Link>
+      </nav>
+
+    </>
+  )
 }
