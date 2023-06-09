@@ -44,5 +44,5 @@ export default function Auth(props: {
     [userData, user]
   );
 
-  return <AuthContext.Provider value={value}> {props.children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}> {props.children}</AuthContext.Provider>
 }
