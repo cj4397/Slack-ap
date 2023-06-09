@@ -14,9 +14,16 @@ export function Datas(props: {
 }) {
 
 
-    const [user, setUser] = useLocalStorage("User", null)
-    const [user_data, setUserData] = useLocalStorage("UserData", null)
-    const [userFriendList, setFriendList] = useLocalStorage("Friends", [])
+    const value = useMemo(
+        () => ({
+            userData,
+            user,
+            signup,
+            login,
+            logout,
+        }),
+        [userData, user]
+    );
 
 
     const login = (data: any) => {
