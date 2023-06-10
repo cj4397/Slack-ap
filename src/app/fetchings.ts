@@ -1,4 +1,4 @@
-import { useAuth } from "./auth";
+import { useAuth }from "./auth";
 
 interface UserData {
   accessToken: string;
@@ -10,6 +10,7 @@ interface UserData {
 export function useDatabase() {
   const { userData } = useAuth();
   const { accessToken, client, expiry, uid } = userData as UserData;
+  
 
   const fetchApi = async (url: string, method: string, body?: any) => {
     const headers = {
@@ -132,3 +133,5 @@ export function useDatabase() {
     getMessageUser,
   };
 }
+
+export default useDatabase;

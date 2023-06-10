@@ -3,7 +3,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { useAuth } from '../auth';
 import './login.css'

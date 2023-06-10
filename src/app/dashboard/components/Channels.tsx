@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { useAuth } from "@/app/Auth";
+import { useAuth } from "@/app/auth";
 import { useDatabase } from "@/app/fetchings";
 
 export default function ChannelsPage() {
