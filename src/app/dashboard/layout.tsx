@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import Link from "next/link";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Stack } from "@mui/material";
@@ -18,18 +18,19 @@ interface Message {
   content: string;
 }
 
-export default function DashboardLayout(props: { children: React.ReactNode }) {
+export default function DashboardLayout({ children, }: { children: React.ReactNode; }) {
   const { user, logout } = useAuth();
   const route = useRouter();
   const { getUsers, getMessageUser } = useDatabase();
   const [users, setUsers] = useState<User[]>([]);
-  const [messages, setMessages] = useState<Record<number, Message[]>>([]);
+  const [messages, setMessages]: any = useState<Record<number, Message[]>>([]);
   const userID: number = user.data.id;
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const usersData = await getUsers();
+        console.log(usersData)
         setUsers(usersData.data);
       } catch (error) {
         console.error(error);
@@ -43,23 +44,24 @@ export default function DashboardLayout(props: { children: React.ReactNode }) {
     const fetchMessages = async () => {
       try {
         const response = await getMessageUser(userID); //when userID is hardcoded, it can fetch the messages from this user, but here it does not fetch any messages when a variable is passed, then blames the UserData being null. 
+        console.log(response)
         const messagesData = response.data
         if (messagesData.length > 0) {
-          setMessages( messagesData );
+          setMessages(messagesData);
         }
       } catch (error) {
         console.error(error);
       }
     };
-    
-  
+
+
     fetchMessages();
   }, []);
 
   // const handleShowMessages = () => {
   //   console.log('clicked')
   // }
-  
+
   if (user === null) {
     // Redirect to login page if user is not authenticated
     return route.push("/login");
@@ -67,7 +69,7 @@ export default function DashboardLayout(props: { children: React.ReactNode }) {
   console.log(messages);
 
   return (
-    <>  
+    <>
       <section>
         <Grid2 container spacing={2}>
           <Grid2 xs={3}>
@@ -79,20 +81,21 @@ export default function DashboardLayout(props: { children: React.ReactNode }) {
               <h1>Channels</h1>
               <h1>Direct Messages</h1>
               {users.map((user) => {
-                if (messages.some((message) => message.receiver.id === user.id && message.receiver.id !== userID)) {
+                if (messages.some((message: any) => message.receiver.id === user.id && message.receiver.id !== userID)) {
                   return (
                     <div key={user.id}>
                       <p>{user.email}</p>
                     </div>
                   );
                 }
-                return null; 
+                return null;
               })
               }
             </Stack>
           </Grid2>
           <Grid2 xs={9}>
-            <DashboardPage users={users} />
+            {children}
+            {/* <DashboardPage users={users} /> */}
           </Grid2>
         </Grid2>
       </section>

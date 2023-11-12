@@ -11,8 +11,8 @@ interface DashboardPageProps {
   users: User[];
 }
 
-const DashboardPage: React.FC<DashboardPageProps> = (props) => {
-  const { sendMessageAPIUser } = useDatabase()
+function DashboardPage() {
+  const { sendMessageAPIUser, getUsers } = useDatabase()
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -20,21 +20,36 @@ const DashboardPage: React.FC<DashboardPageProps> = (props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [message, setMessage] = useState<string>("");
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const usersData = await getUsers();
+        console.log(usersData)
+        setUsers(usersData.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUsers();
+  }, [])
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setFilteredUsers([]);
     } else {
-      const filtered = props.users.filter((user) =>
+      const filtered = users.filter((user) =>
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredUsers(filtered);
     }
-  }, [searchTerm, props.users]);
+  }, [searchTerm, users]);
 
   const handleSendMessage = async () => {
     if (!selectedUserId || message.trim() === "") return;
-  
+
     try {
       await sendMessageAPIUser({
         userId: selectedUserId,

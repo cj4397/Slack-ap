@@ -5,7 +5,7 @@ import useLocalStorage from "@/app/Storage";
 
 interface AuthContextProps {
   userData: object | null;
-  user: object | null;
+  user: any | null;
   signup: (data: { user_info?: object; user_data?: object }) => void;
   login: (data: { user_info?: object; user_data?: object }) => void;
   logout: () => void;
@@ -22,8 +22,8 @@ export const useAuth = (): AuthContextProps => {
 };
 
 export default function Auth(props: { children: React.ReactNode }) {
-    const [user, setUser] = useLocalStorage("User", null);
-    const [userData, setUserData] = useLocalStorage("UserData", null);
+  const [user, setUser] = useLocalStorage("User", null);
+  const [userData, setUserData] = useLocalStorage("UserData", null);
 
   const login = (data: { user_info?: object; user_data?: object }) => {
     const { user_info, user_data } = data;
