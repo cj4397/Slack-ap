@@ -8,10 +8,7 @@ import { useDatabase } from "../fetchings";
 import DashboardPage from "./page";
 import { useRouter } from "next/navigation";
 
-interface User {
-  id: number;
-  email: string;
-}
+
 
 interface Message {
   id: number;
@@ -22,7 +19,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
   const { user, logout } = useAuth();
   const route = useRouter();
   const { getUsers, getMessageUser } = useDatabase();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers]: any = useState([]);
   const [messages, setMessages]: any = useState<Record<number, Message[]>>([]);
   const userID: number = user.data.id;
 
@@ -80,7 +77,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
               </Link>
               <h1>Channels</h1>
               <h1>Direct Messages</h1>
-              {users.map((user) => {
+              {users.map((user: any) => {
                 if (messages.some((message: any) => message.receiver.id === user.id && message.receiver.id !== userID)) {
                   return (
                     <div key={user.id}>

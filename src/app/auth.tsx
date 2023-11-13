@@ -4,8 +4,8 @@ import { useMemo, createContext, useContext } from "react";
 import useLocalStorage from "@/app/Storage";
 
 interface AuthContextProps {
-  userData: object | null;
-  user: any | null;
+  userData: object | any;
+  user: object | any;
   signup: (data: { user_info?: object; user_data?: object }) => void;
   login: (data: { user_info?: object; user_data?: object }) => void;
   logout: () => void;
@@ -22,8 +22,8 @@ export const useAuth = (): AuthContextProps => {
 };
 
 export default function Auth(props: { children: React.ReactNode }) {
-  const [user, setUser] = useLocalStorage("User", null);
-  const [userData, setUserData] = useLocalStorage("UserData", null);
+  const [user, setUser] = useLocalStorage("User", '');
+  const [userData, setUserData] = useLocalStorage("UserData", '');
 
   const login = (data: { user_info?: object; user_data?: object }) => {
     const { user_info, user_data } = data;
