@@ -8,8 +8,8 @@ export default function DirectMessagePage() {
   const { getUsers } = useDatabase();
   const { user } = useAuth();
   const [userList, setUserList] = useState([]);
-  const [userId, setUserId] = useState(null);
-  const [userEmail, setUserEmail] = useState(null);
+  const [userId, setUserId]: any[] = useState();
+  const [userEmail, setUserEmail]: any[] = useState();
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -72,7 +72,7 @@ interface ModalProps {
 
 function Modal({ open, setOpen, userId, userEmail }: ModalProps) {
   const { user } = useAuth();
-  const { getMessageUser, sendMessageAPIUser } = useDatabase();
+  const { getMessageUser, sendMessageAPIUser }: any = useDatabase();
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
 

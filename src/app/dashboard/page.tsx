@@ -7,15 +7,12 @@ interface User {
   email: string;
 }
 
-interface DashboardPageProps {
-  users: User[];
-}
 
 function DashboardPage() {
   const { sendMessageAPIUser, getUsers } = useDatabase()
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
