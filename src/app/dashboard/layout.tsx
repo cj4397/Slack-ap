@@ -8,7 +8,10 @@ import { useDatabase } from "../fetchings";
 import DashboardPage from "./page";
 import { useRouter } from "next/navigation";
 
-
+// interface User {
+//   id: number;
+//   email: string;
+// }
 
 interface Message {
   id: number;
@@ -16,12 +19,12 @@ interface Message {
 }
 
 export default function DashboardLayout({ children, }: { children: React.ReactNode; }) {
-  const { user, logout } = useAuth();
+  const { user, logout }: any = useAuth();
   const route = useRouter();
   const { getUsers, getMessageUser } = useDatabase();
   const [users, setUsers]: any = useState([]);
   const [messages, setMessages]: any = useState<Record<number, Message[]>>([]);
-  const userID: number = user.data.id;
+  // const userID: number = user.data.id;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -40,7 +43,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await getMessageUser(userID); //when userID is hardcoded, it can fetch the messages from this user, but here it does not fetch any messages when a variable is passed, then blames the UserData being null. 
+        const response = await getMessageUser(user.data.id); //when userID is hardcoded, it can fetch the messages from this user, but here it does not fetch any messages when a variable is passed, then blames the UserData being null. 
         console.log(response)
         const messagesData = response.data
         if (messagesData.length > 0) {
@@ -78,7 +81,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
               <h1>Channels</h1>
               <h1>Direct Messages</h1>
               {users.map((user: any) => {
-                if (messages.some((message: any) => message.receiver.id === user.id && message.receiver.id !== userID)) {
+                if (messages.some((message: any) => message.receiver.id === user.id && message.receiver.id !== user.data.id)) {
                   return (
                     <div key={user.id}>
                       <p>{user.email}</p>

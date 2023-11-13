@@ -5,11 +5,21 @@ import useLocalStorage from "@/app/Storage";
 
 interface AuthContextProps {
   userData: object | any;
-  user: object | any;
+  user: Data;
   signup: (data: { user_info?: object; user_data?: object }) => void;
   login: (data: { user_info?: object; user_data?: object }) => void;
   logout: () => void;
 }
+interface Data {
+  data: User
+}
+
+interface User {
+  id: number;
+  email: string;
+
+}
+
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
