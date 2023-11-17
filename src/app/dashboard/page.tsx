@@ -9,7 +9,7 @@ interface User {
 
 
 function DashboardPage() {
-  const { sendMessageAPIUser, getUsers } = useDatabase()
+  // const { sendMessageAPIUser, getUsers } = useDatabase()
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState("");
@@ -19,50 +19,50 @@ function DashboardPage() {
   const [message, setMessage] = useState<string>("");
   const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const usersData = await getUsers();
-        console.log(usersData)
-        setUsers(usersData.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const usersData = await getUsers();
+  //       console.log(usersData)
+  //       setUsers(usersData.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchUsers();
-  }, [])
+  //   fetchUsers();
+  // }, [])
 
-  useEffect(() => {
-    if (searchTerm.trim() === "") {
-      setFilteredUsers([]);
-    } else {
-      const filtered = users.filter((user) =>
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredUsers(filtered);
-    }
-  }, [searchTerm, users]);
+  // useEffect(() => {
+  //   if (searchTerm.trim() === "") {
+  //     setFilteredUsers([]);
+  //   } else {
+  //     const filtered = users.filter((user) =>
+  //       user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  //     );
+  //     setFilteredUsers(filtered);
+  //   }
+  // }, [searchTerm, users]);
 
   const handleSendMessage = async () => {
-    if (!selectedUserId || message.trim() === "") return;
+    // if (!selectedUserId || message.trim() === "") return;
 
-    try {
-      await sendMessageAPIUser({
-        userId: selectedUserId,
-        message: message,
-      });
-      closeModal();
-      setSuccessMessage("Message sent successfully");
+    // try {
+    //   await sendMessageAPIUser({
+    //     userId: selectedUserId,
+    //     message: message,
+    //   });
+    //   closeModal();
+    //   setSuccessMessage("Message sent successfully");
 
-      // Clear success message after 3 seconds
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000);
-    } catch (error) {
-      console.error(error);
-      setError("Failed to send message");
-    }
+    //   // Clear success message after 3 seconds
+    //   setTimeout(() => {
+    //     setSuccessMessage("");
+    //   }, 3000);
+    // } catch (error) {
+    //   console.error(error);
+    //   setError("Failed to send message");
+    // }
   };
 
   const openModal = (userId: number) => {

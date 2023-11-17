@@ -1,6 +1,8 @@
 import './globals.css'
 
 import Auth from "./auth";
+import FirebaseAuth from './firebase/firebaseAuth';
+
 
 
 export const metadata = {
@@ -16,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
 
-      <body><Auth>{children}</Auth></body>
+
+      {/* <body><Auth>{children}</Auth></body> */}
+      <body><FirebaseAuth>{children}</FirebaseAuth></body>
     </html>
   );
 }

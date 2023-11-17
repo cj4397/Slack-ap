@@ -1,17 +1,16 @@
 'use client'
-import React, { Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Stack } from "@mui/material";
-import { useAuth } from "../auth";
-import { useDatabase } from "../fetchings";
-import DashboardPage from "./page";
-import { useRouter } from "next/navigation";
+// import { useAuth } from "../auth";
+// import { useDatabase } from "../fetchings";
 
-// interface User {
-//   id: number;
-//   email: string;
-// }
+import { useRouter } from "next/navigation";
+import Database from "../firebase/Database";
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import firebase_app from "../firebase/config";
+import { useAuth } from "../firebase/firebaseAuth";
 
 interface Message {
   id: number;
@@ -19,54 +18,99 @@ interface Message {
 }
 
 export default function DashboardLayout({ children, }: { children: React.ReactNode; }) {
-  const { user, logout }: any = useAuth();
+  const { user, logout } = useAuth();
+
+  const auth = getAuth(firebase_app);
+  const see = onAuthStateChanged(auth, (x) => {
+    console.log(x)
+  })
+
+  useEffect(() => {
+    see()
+    console.log('x')
+  }, [])
+
+
   const route = useRouter();
-  const { getUsers, getMessageUser } = useDatabase();
+  // const { getUsers, getMessageUser }: any = useDatabase();
   const [users, setUsers]: any = useState([]);
   const [messages, setMessages]: any = useState<Record<number, Message[]>>([]);
-  // const userID: number = user.data.id;
+  const [int, setInt] = useState(0)
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const usersData = await getUsers();
-        console.log(usersData)
-        setUsers(usersData.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  // const fetchMessages = async (id: number) => {
+  //   try {
 
-    fetchUsers();
-  }, []);
+  //     if (int > 99) {
+  //       setTimeout(async () => {
+  //         const response = await getMessageUser(id);
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await getMessageUser(user.data.id); //when userID is hardcoded, it can fetch the messages from this user, but here it does not fetch any messages when a variable is passed, then blames the UserData being null. 
-        console.log(response)
-        const messagesData = response.data
-        if (messagesData.length > 0) {
-          setMessages(messagesData);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //         if (response.data.length > 0) {
+  //           setMessages(response.data);
+  //           if (int == 99) {
+  //             setInt(0)
+  //           }
+  //         }
+  //       }, 100 + (int * 100))
+  //     } else {
+  //       const response = await getMessageUser(id);
+  //       if (response.data.length > 0) {
+  //         setMessages(response.data);
+  //       }
+  //       console.log(response)
+  //     }
+
+  //     //when userID is hardcoded, it can fetch the messages from this user, but here it does not fetch any messages when a variable is passed, then blames the UserData being null. 
 
 
-    fetchMessages();
-  }, []);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   let max_id = 0
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const usersData = await getUsers();
+  //       console.log(usersData)
+  //       setUsers(usersData.data);
+  //       usersData.data.forEach((x: any) => {
+
+  //         setInt(int + 1)
+  //         fetchMessages(x.id)
+
+  //       })
+
+
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+
+  //   };
+  //   fetchUsers();
+
+  // }, [])
+
+  // useEffect(() => {
+
+
+  //   // fetchMessages(430);
+  // }, []);
 
   // const handleShowMessages = () => {
   //   console.log('clicked')
   // }
 
-  if (user === null) {
+  if (user === '') {
     // Redirect to login page if user is not authenticated
     return route.push("/login");
   }
-  console.log(messages);
+  console.log(user);
+
+
+
+  const { db } = Database()
+
 
   return (
     <>
@@ -81,7 +125,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
               <h1>Channels</h1>
               <h1>Direct Messages</h1>
               {users.map((user: any) => {
-                if (messages.some((message: any) => message.receiver.id === user.id && message.receiver.id !== user.data.id)) {
+                if (messages.some((message: any) => message.receiver.id === user.id && message.receiver.id !== 2)) {
                   return (
                     <div key={user.id}>
                       <p>{user.email}</p>
