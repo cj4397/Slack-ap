@@ -1,6 +1,9 @@
 'use client'
 import React, { useState, useEffect } from "react";
-import { useDatabase } from "../fetchings"
+import FirebaseAPI from "../firebase/firebaseAPI";
+import SendMessage from "./components/modals/SendMessage";
+import { useAuth } from "../firebase/firebaseAuth";
+import MiniLinks from "./components/MiniLinks";
 
 interface User {
   id: number;
@@ -8,17 +11,31 @@ interface User {
 }
 
 
-function DashboardPage() {
+export default function DashboardPage() {
   // const { sendMessageAPIUser, getUsers } = useDatabase()
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedUserId, setSelectedUserId] = useState('');
   const [message, setMessage] = useState<string>("");
-  const [users, setUsers] = useState<User[]>([]);
+  const [userDetails, setUserDetails]: any = useState({})
 
+
+
+
+  const { getAllUsers, getUserDetails } = FirebaseAPI()
+
+  const [users, setUsers]: any[] = useState([])
+  useEffect(() => {
+    const give_users = async () => {
+      const result = await getUserDetails()
+      setUsers(await getAllUsers())
+      setUserDetails(result)
+    }
+    give_users()
+  }, [])
   // useEffect(() => {
   //   const fetchUsers = async () => {
   //     try {
@@ -33,16 +50,18 @@ function DashboardPage() {
   //   fetchUsers();
   // }, [])
 
-  // useEffect(() => {
-  //   if (searchTerm.trim() === "") {
-  //     setFilteredUsers([]);
-  //   } else {
-  //     const filtered = users.filter((user) =>
-  //       user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  //     );
-  //     setFilteredUsers(filtered);
-  //   }
-  // }, [searchTerm, users]);
+  const searcher = (e: string) => {
+    setSearchTerm(e)
+    if (e.trim() === "") {
+      setFilteredUsers([]);
+    } else {
+      const filtered = users.filter((user: any) => user.data.email.toLowerCase().includes(e.toLowerCase())
+      );
+      console.log(filtered);
+      setFilteredUsers(filtered);
+    }
+  }
+
 
   const handleSendMessage = async () => {
     // if (!selectedUserId || message.trim() === "") return;
@@ -65,52 +84,76 @@ function DashboardPage() {
     // }
   };
 
-  const openModal = (userId: number) => {
+  const openModal = (userId: string) => {
     setSelectedUserId(userId);
     setShowModal(true);
   };
 
   const closeModal = () => {
-    setSelectedUserId(null);
+    setSelectedUserId('');
     setMessage("");
     setShowModal(false);
   };
 
+  let date = new Date(userDetails.created_at).getMonth() + '-' + new Date(userDetails.created_at).getDate() + '-' + new Date(userDetails.created_at).getFullYear()
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <input
+    <div >
+      <MiniLinks />
+      <section className="box">
+        <div className="has-text-centered	">
+          <img src="https://bulma.io/images/placeholders/128x128.png" alt="" />
+        </div>
+        {userDetails.username && <>
+          Name:
+          <br />
+          <p className="ml-5">{userDetails.username}</p>
+          <br />
+          Email:
+          <br />
+          <p className="ml-5">{userDetails.email}</p>
+          <br />
+          Created at:
+          <br />
+          <time className="ml-5">{date}</time>
+        </>}
+
+      </section>
+      <section className="box">
+        Friends
+        <div>
+
+        </div>
+      </section>
+      <section className="box">
+        Groups
+        <div>
+
+        </div>
+      </section>
+
+      {/* <input
         type="text"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => searcher(e.target.value)}
         placeholder="Search users..."
       />
       {error && <p>{error}</p>}
       {successMessage && <p>{successMessage}</p>}
       <ul>
-        {filteredUsers.map((user) => (
-          <li key={user.id}>
-            {user.email}
-            <button onClick={() => openModal(user.id)}>Send a Message</button>
+        {filteredUsers.map((user: any) => (
+          <li key={user.key}>
+            {user.data.email}
+            <button onClick={() => openModal(user.key)}>Send a Message</button>
           </li>
         ))}
-      </ul>
+      </ul> */}
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Send Message</h2>
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button onClick={handleSendMessage}>Send</button>
-            <button onClick={closeModal}>Cancel</button>
-          </div>
-        </div>
+        <SendMessage showModal={showModal} setShowModal={setShowModal} />
       )}
+
+
+
     </div>
   );
 };
 
-export default DashboardPage;

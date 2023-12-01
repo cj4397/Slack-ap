@@ -1,0 +1,335 @@
+.has-text-white {
+  color: hsl(0, 0%, 100%) !important;
+}
+
+a.has-text-white:hover, a.has-text-white:focus {
+  color: #e6e6e6 !important;
+}
+
+.has-background-white {
+  background-color: hsl(0, 0%, 100%) !important;
+}
+
+.has-text-black {
+  color: hsl(0, 0%, 4%) !important;
+}
+
+a.has-text-black:hover, a.has-text-black:focus {
+  color: black !important;
+}
+
+.has-background-black {
+  background-color: hsl(0, 0%, 4%) !important;
+}
+
+.has-text-light {
+  color: hsl(0, 0%, 90%) !important;
+}
+
+a.has-text-light:hover, a.has-text-light:focus {
+  color: #cccccc !important;
+}
+
+.has-background-light {
+  background-color: hsl(0, 0%, 90%) !important;
+}
+
+.has-text-dark {
+  color: hsl(220, 60%, 10%) !important;
+}
+
+a.has-text-dark:hover, a.has-text-dark:focus {
+  color: black !important;
+}
+
+.has-background-dark {
+  background-color: hsl(220, 60%, 10%) !important;
+}
+
+.has-text-primary {
+  color: hsl(41, 56%, 51%) !important;
+}
+
+a.has-text-primary:hover, a.has-text-primary:focus {
+  color: #a37e2e !important;
+}
+
+.has-background-primary {
+  background-color: hsl(41, 56%, 51%) !important;
+}
+
+.has-text-primary-light {
+  color: #fbf7ef !important;
+}
+
+a.has-text-primary-light:hover, a.has-text-primary-light:focus {
+  color: #efe3c7 !important;
+}
+
+.has-background-primary-light {
+  background-color: #fbf7ef !important;
+}
+
+.has-text-primary-dark {
+  color: #8b6c27 !important;
+}
+
+a.has-text-primary-dark:hover, a.has-text-primary-dark:focus {
+  color: #b38a32 !important;
+}
+
+.has-background-primary-dark {
+  background-color: #8b6c27 !important;
+}
+
+.has-text-link {
+  color: hsl(175, 90%, 35%) !important;
+}
+
+a.has-text-link:hover, a.has-text-link:focus {
+  color: #067970 !important;
+}
+
+.has-background-link {
+  background-color: hsl(175, 90%, 35%) !important;
+}
+
+.has-text-link-light {
+  color: #ecfefc !important;
+}
+
+a.has-text-link-light:hover, a.has-text-link-light:focus {
+  color: #bbfbf6 !important;
+}
+
+.has-background-link-light {
+  background-color: #ecfefc !important;
+}
+
+.has-text-link-dark {
+  color: #0ab8aa !important;
+}
+
+a.has-text-link-dark:hover, a.has-text-link-dark:focus {
+  color: #0ce9d6 !important;
+}
+
+.has-background-link-dark {
+  background-color: #0ab8aa !important;
+}
+
+.has-text-info {
+  color: hsl(175, 90%, 35%) !important;
+}
+
+a.has-text-info:hover, a.has-text-info:focus {
+  color: #067970 !important;
+}
+
+.has-background-info {
+  background-color: hsl(175, 90%, 35%) !important;
+}
+
+.has-text-info-light {
+  color: #ecfefc !important;
+}
+
+a.has-text-info-light:hover, a.has-text-info-light:focus {
+  color: #bbfbf6 !important;
+}
+
+.has-background-info-light {
+  background-color: #ecfefc !important;
+}
+
+.has-text-info-dark {
+  color: #0ab8aa !important;
+}
+
+a.has-text-info-dark:hover, a.has-text-info-dark:focus {
+  color: #0ce9d6 !important;
+}
+
+.has-background-info-dark {
+  background-color: #0ab8aa !important;
+}
+
+.has-text-success {
+  color: hsl(153, 53%, 53%) !important;
+}
+
+a.has-text-success:hover, a.has-text-success:focus {
+  color: #34a873 !important;
+}
+
+.has-background-success {
+  background-color: hsl(153, 53%, 53%) !important;
+}
+
+.has-text-success-light {
+  color: #effaf5 !important;
+}
+
+a.has-text-success-light:hover, a.has-text-success-light:focus {
+  color: #c8eedd !important;
+}
+
+.has-background-success-light {
+  background-color: #effaf5 !important;
+}
+
+.has-text-success-dark {
+  color: #257953 !important;
+}
+
+a.has-text-success-dark:hover, a.has-text-success-dark:focus {
+  color: #31a06e !important;
+}
+
+.has-background-success-dark {
+  background-color: #257953 !important;
+}
+
+.has-text-warning {
+  color: hsl(150, 100%, 25%) !important;
+}
+
+a.has-text-warning:hover, a.has-text-warning:focus {
+  color: #004d26 !important;
+}
+
+.has-background-warning {
+  background-color: hsl(150, 100%, 25%) !important;
+}
+
+.has-text-warning-light {
+  color: #ebfff5 !important;
+}
+
+a.has-text-warning-light:hover, a.has-text-warning-light:focus {
+  color: #b8ffdb !important;
+}
+
+.has-background-warning-light {
+  background-color: #ebfff5 !important;
+}
+
+.has-text-warning-dark {
+  color: #00eb75 !important;
+}
+
+a.has-text-warning-dark:hover, a.has-text-warning-dark:focus {
+  color: #1fff8f !important;
+}
+
+.has-background-warning-dark {
+  background-color: #00eb75 !important;
+}
+
+.has-text-danger {
+  color: hsl(0, 100%, 40%) !important;
+}
+
+a.has-text-danger:hover, a.has-text-danger:focus {
+  color: #990000 !important;
+}
+
+.has-background-danger {
+  background-color: hsl(0, 100%, 40%) !important;
+}
+
+.has-text-danger-light {
+  color: #ffebeb !important;
+}
+
+a.has-text-danger-light:hover, a.has-text-danger-light:focus {
+  color: #ffb8b8 !important;
+}
+
+.has-background-danger-light {
+  background-color: #ffebeb !important;
+}
+
+.has-text-danger-dark {
+  color: red !important;
+}
+
+a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
+  color: #ff3333 !important;
+}
+
+.has-background-danger-dark {
+  background-color: red !important;
+}
+
+.has-text-black-bis {
+  color: hsl(0, 0%, 7%) !important;
+}
+
+.has-background-black-bis {
+  background-color: hsl(0, 0%, 7%) !important;
+}
+
+.has-text-black-ter {
+  color: hsl(0, 0%, 14%) !important;
+}
+
+.has-background-black-ter {
+  background-color: hsl(0, 0%, 14%) !important;
+}
+
+.has-text-grey-darker {
+  color: hsl(220, 60%, 10%) !important;
+}
+
+.has-background-grey-darker {
+  background-color: hsl(220, 60%, 10%) !important;
+}
+
+.has-text-grey-dark {
+  color: hsl(0, 0%, 29%) !important;
+}
+
+.has-background-grey-dark {
+  background-color: hsl(0, 0%, 29%) !important;
+}
+
+.has-text-grey {
+  color: hsl(0, 0%, 48%) !important;
+}
+
+.has-background-grey {
+  background-color: hsl(0, 0%, 48%) !important;
+}
+
+.has-text-grey-light {
+  color: hsl(0, 0%, 71%) !important;
+}
+
+.has-background-grey-light {
+  background-color: hsl(0, 0%, 71%) !important;
+}
+
+.has-text-grey-lighter {
+  color: hsl(0, 0%, 86%) !important;
+}
+
+.has-background-grey-lighter {
+  background-color: hsl(0, 0%, 86%) !important;
+}
+
+.has-text-white-ter {
+  color: hsl(0, 0%, 90%) !important;
+}
+
+.has-background-white-ter {
+  background-color: hsl(0, 0%, 90%) !important;
+}
+
+.has-text-white-bis {
+  color: hsl(0, 0%, 98%) !important;
+}
+
+.has-background-white-bis {
+  background-color: hsl(0, 0%, 98%) !important;
+}/*# sourceMappingURL=color.css.map */

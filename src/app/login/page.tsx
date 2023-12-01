@@ -16,7 +16,7 @@ export default function Login() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { signIn, signUp } = FirebaseApi()
+    const { signin, signup } = FirebaseApi()
 
     // const route = useRouter();
     const { login } = useAuth();
@@ -24,7 +24,7 @@ export default function Login() {
 
     const handleSubmitSignIn = async (e: any) => {
         e.preventDefault();
-        signIn(email, password)
+        signin(email, password)
 
 
         // const response = await fetch('http://206.189.91.54/api/v1/auth/sign_in', {
@@ -60,7 +60,7 @@ export default function Login() {
     const handleSubmitSignUp = async (e: any) => {
         e.preventDefault();
 
-        signUp(email, password)
+        signup(name, email, password)
         // const response = await fetch('http://206.189.91.54/api/v1/auth/', {
         //     method: "POST",
         //     headers: {
