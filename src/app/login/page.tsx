@@ -3,7 +3,7 @@
 
 // import { useRouter } from 'next/navigation';
 import { useState } from "react";
-import { useAuth } from '../auth';
+
 import './login.css'
 import { FirebaseApi } from "../firebase/signin";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,7 +19,7 @@ export default function Login() {
     const { signin, signup } = FirebaseApi()
 
     // const route = useRouter();
-    const { login } = useAuth();
+
     const [slide, setSlide] = useState(false);
 
     const handleSubmitSignIn = async (e: any) => {
