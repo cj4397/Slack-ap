@@ -23,7 +23,7 @@ export default function MiniLinks(props: any) {
 
             <>
                 {list.map((e: any) => (
-                    <li>
+                    <li key={e.email}>
                         wsdfg
                         <Link href={{
                             pathname: `/dashboard/DirectMessage/${e.data.username}`,

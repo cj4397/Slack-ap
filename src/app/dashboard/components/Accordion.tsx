@@ -30,7 +30,7 @@ export default function Accordion(props: any) {
                             <ul className="list">
                                 {(friends.length > 0) ? <>
                                     {friends.map((e: any) => (
-                                        <li>
+                                        <li key={e.email}>
                                             <Link href={{
                                                 pathname: `/dashboard/DirectMessage/${e.data.username}`,
                                                 query: { friend: `${e.email}` },
@@ -66,7 +66,7 @@ export default function Accordion(props: any) {
                             <ul className="list">
                                 {(groups.length > 0) ? <>
                                     {groups.map((e: any) => (
-                                        <li>
+                                        <li key={e.email}>
                                             <Link href={{
                                                 pathname: `/dashboard/GroupChat/${e.data.username}`,
                                                 query: { friend: `${e.email}` },

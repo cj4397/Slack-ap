@@ -14,22 +14,20 @@ export default function Layout({ children, }: { children: React.ReactNode; }) {
     useEffect(() => {
         const read = async () => {
             const result = await getAllUsers()
+            // const x = await getFriends()
+            // setFriendList(x)
             setUsers(result)
             setloader(true)
         }
-        const get_friends = async () => {
-            const x = await getFriends()
-            setFriendList(x)
-        }
-        console.log(getAllUsers())
+
         read()
-        get_friends()
+
     }, [])
 
 
 
-    console.log(friend_list)
-    const list = [{ email: 'x', data: { username: "age" } }]
+    // console.log(friend_list)
+
 
     return (
         <main>

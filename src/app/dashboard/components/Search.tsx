@@ -52,7 +52,8 @@ export default function Search(props: any) {
           {successMessage && <p>{successMessage}</p>} */}
             <div className="search-dropdown show">
                 {(filteredUsers.length === 0 && noDisplay) ? <>
-                    Can't find such User
+                    <p>Can't find such User</p>
+
                 </> : <>
                     <ul className=''>
                         {filteredUsers.map((user: any) => (
