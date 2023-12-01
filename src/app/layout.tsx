@@ -1,6 +1,6 @@
 import './globals.css'
 
-import Auth from "./auth";
+
 import FirebaseAuth from './firebase/firebaseAuth';
 
 
@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
 
 
-      {/* <body><Auth>{children}</Auth></body> */}
+
       <body><FirebaseAuth>{children}</FirebaseAuth></body>
     </html>
   );
