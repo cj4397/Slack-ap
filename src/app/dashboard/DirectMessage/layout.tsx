@@ -5,7 +5,7 @@ import FirebaseAPI from '@/app/firebase/firebaseAPI';
 import MiniLinks from '../components/MiniLinks';
 import Link from "next/link";
 
-export default function layout({ children, }: { children: React.ReactNode; }) {
+export default function Layout({ children, }: { children: React.ReactNode; }) {
     const { getAllUsers, getFriends } = FirebaseAPI()
     const [users, setUsers] = useState([])
     const [friend_list, setFriendList] = useState([])
