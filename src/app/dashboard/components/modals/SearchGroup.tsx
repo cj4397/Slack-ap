@@ -16,9 +16,9 @@ export default function SearchGroup(props: {
 }) {
     const { setModal, modal, groups } = props
     const { sendGroupJoinRequest, getAllGroups } = FirebaseAPI()
-    const [group, setGroup] = useState<{ group: string, members: { emailKey: Data }[] }[]>([])
+    const [group, setGroup] = useState<{ group: string, members: { emailKey: string, data: Data }[] }[]>([])
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [filteredUsers, setFilteredUsers] = useState<{ group: string, members: { emailKey: Data }[] }[]>([]);
+    const [filteredUsers, setFilteredUsers] = useState<{ group: string, members: { emailKey: string, data: Data }[] }[]>([]);
     const [noDisplay, setNoDisplay] = useState<boolean>(false)
 
     useEffect(() => {
@@ -81,7 +81,7 @@ export default function SearchGroup(props: {
                                             <ul>
                                                 {g.members.map((member) => (
                                                     <li>
-                                                        {member.emailKey.username}
+                                                        {member.emailKey}
                                                     </li>
 
                                                 ))}

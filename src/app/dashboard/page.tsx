@@ -84,7 +84,7 @@ export default function DashboardPage() {
                 </div>
               ))}
             </> : <>
-              No Groups Registered
+              No Friends Registered
             </>}
           </div>
           <div>
@@ -103,7 +103,7 @@ export default function DashboardPage() {
                 </div>
               ))}
             </> : <>
-              No Friends Registered
+              No Groups Registered
             </>}
 
           </div>

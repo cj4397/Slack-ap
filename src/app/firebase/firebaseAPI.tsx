@@ -2,6 +2,7 @@ import React from 'react'
 import { getDatabase, set, ref, get, child, onValue, serverTimestamp, remove } from 'firebase/database'
 import { useAuth } from './firebaseAuth'
 import { forEachChild } from 'typescript'
+import { group } from 'console'
 
 interface Data {
     email: string,
@@ -34,15 +35,51 @@ export default function FirebaseAPI() {
     }
 
     const getAllGroups = (groups: string[]) => {
-        const dbRef = ref(db, '/Groups');
-        let groupList: { group: string, members: { emailKey: Data }[] }[] = []
+        const dbRef = ref(db, '/groups');
+        let groupList: { group: string, members: { emailKey: string, data: Data }[] }[] = []
         onValue(dbRef, (snapshot) => {
 
             snapshot.forEach((childSnapshot) => {
                 const childKey = childSnapshot.key;
                 const childData = childSnapshot.val();
                 if (!groups.includes(childKey)) {
-                    groupList.push({ group: childKey, members: childData.member })
+                    let Glist: { emailKey: string, data: Data }[] = []
+                    console.log(childData.member)
+
+                    const test = (value: unknown): value is Data => {
+                        if (typeof value != "object") {
+                            throw new Error(`Unexpected type: ${typeof value}`);
+                        }
+                        if (value == null) {
+                            throw new Error("Unexpected value: null");
+                        }
+                        return true;
+                    }
+
+                    const object = (value: any): value is object => {
+                        if (typeof value != "object") {
+                            throw new Error(`Unexpected type: ${typeof value}`);
+                        }
+
+                        if (value == null) {
+                            throw new Error("Unexpected value: null");
+                        }
+                        return true;
+                    }
+                    if (object(childData.member)) {
+                        for (const [key, value] of Object.entries(childData.member)) {
+                            try {
+                                if (test(value)) {
+                                    Glist.push({ emailKey: key, data: value })
+                                }
+                            } catch (error) {
+                                console.log(error)
+                            }
+
+                        };
+                    }
+
+                    groupList.push({ group: childKey, members: Glist })
                 }
 
             });

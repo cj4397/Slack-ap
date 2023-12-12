@@ -1,13 +1,12 @@
 'use client'
 
 
-// import { useRouter } from 'next/navigation';
+
 import { useState } from "react";
 
 import './login.css'
 import { FirebaseApi } from "../firebase/signin";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
+
 
 
 
@@ -18,7 +17,7 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const { signin, signup } = FirebaseApi()
 
-    // const route = useRouter();
+
 
     const [slide, setSlide] = useState(false);
 
@@ -26,55 +25,13 @@ export default function Login() {
         e.preventDefault();
         signin(email, password)
 
-
-        // const response = await fetch('http://206.189.91.54/api/v1/auth/sign_in', {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         email: email,
-        //         password: password,
-        //     })
-        // });
-
-        // const data = await response.json();
-
-        // if (response.ok) {
-        //     login({
-        //         user_info: data,
-        //         user_data: {
-        //             accessToken: response.headers.get('Access-Token'),
-        //             password: password,
-        //             email: email,
-        //             client: response.headers.get('Client'),
-        //             expiry: response.headers.get('Expiry'),
-        //             uid: response.headers.get('Uid')
-        //         }
-        //     });
-
-        //     route.push('/dashboard');
-        // }
     }
 
     const handleSubmitSignUp = async (e: any) => {
         e.preventDefault();
 
         signup(name, email, password)
-        // const response = await fetch('http://206.189.91.54/api/v1/auth/', {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         email: email,
-        //         password: password,
-        //         password_confirmation: password
-        //     })
-        // });
 
-        // const data = await response.json();
-        // console.log(data);
     }
 
     const slideAnimation = () => {
@@ -85,16 +42,14 @@ export default function Login() {
     return (
 
         <>
-            <h1>Login page</h1>
+
             <main id="body">
                 <div className={`container ${slide ? 'right-panel-active' : ''}`} id="sidebar">
                     <div className="form-container sign-up-container">
 
                         <form onSubmit={handleSubmitSignUp} autoComplete="on">
                             <h1>Create Account</h1>
-                            {/* <div className="social-container">
-                                <a href="#" className="social"><FontAwesomeIcon icon={faGooglePlusG} /></a>
-                            </div> */}
+
 
                             <input id="new_name" type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
                             <input id="new_email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
