@@ -1,6 +1,7 @@
 import React from 'react'
 import { getDatabase, set, ref, get, child, onValue, serverTimestamp, remove } from 'firebase/database'
 import { useAuth } from './firebaseAuth'
+import { forEachChild } from 'typescript'
 
 interface Data {
     email: string,
@@ -106,6 +107,7 @@ export default function FirebaseAPI() {
 
                 if (x.groups) {
                     let Glist = []
+
                     for (const [key, value] of Object.entries(x.groups)) {
 
                         Glist.push(key)

@@ -1,5 +1,5 @@
 import React from 'react'
-import MiniLinks from '../components/MiniLinks'
+
 
 export default function page() {
 

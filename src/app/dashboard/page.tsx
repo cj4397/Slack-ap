@@ -14,7 +14,7 @@ export default function DashboardPage() {
 
   const [userDetails, setUserDetails] = useState<{ created_at: number, username: string, email: string } | undefined>()
   const [userFriends, setUserFriends] = useState<{ email: string, username: string }[]>([])
-  const [userGroup, setUserGroup] = useState<{ email: string, username: string }[]>([])
+  const [userGroup, setUserGroup] = useState<string[]>([])
   const { getUserDetails, getFriendRequest } = FirebaseAPI()
   const [friendRequest, setFriendRequest] = useState<{ email: string, username: string }[]>([])
 
@@ -77,6 +77,25 @@ export default function DashboardPage() {
         <section className="box">
 
           <div className="columns">
+            {(userGroup.length > 0) ? <>
+              {userGroup.map((e) => (
+                <div key={e}>
+                  {e}
+                </div>
+              ))}
+            </> : <>
+              No Groups Registered
+            </>}
+          </div>
+          <div>
+
+          </div>
+        </section>
+        <p className="h1">Groups</p>
+
+        <section className="box">
+
+          <div className="columns">
             {(userFriends.length > 0) ? <>
               {userFriends.map((e) => (
                 <div key={e.email}>
@@ -86,15 +105,6 @@ export default function DashboardPage() {
             </> : <>
               No Friends Registered
             </>}
-          </div>
-          <div>
-
-          </div>
-        </section>
-        Groups
-        <section className="box">
-
-          <div>
 
           </div>
         </section>
