@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "./firebaseAuth";
 
 
+
 const auth = getAuth(firebase_app);
 
 export function FirebaseApi() {
@@ -19,6 +20,7 @@ export function FirebaseApi() {
             if (!result.error) {
                 signIn(email)
 
+                // route.prefetch('/dashboard');
                 route.push('/dashboard');
 
             } else {

@@ -1,42 +1,62 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Search from '../components/Search';
+
 import FirebaseAPI from '@/app/firebase/firebaseAPI';
-import MiniLinks from '../components/MiniLinks';
+
 import Link from "next/link";
 
+interface Data {
+    email: string,
+    username: string
+}
+
 export default function Layout({ children, }: { children: React.ReactNode; }) {
-    const { getAllUsers, getFriends } = FirebaseAPI()
-    const [users, setUsers] = useState([])
+    const { getAllConversations, getAllFriendConnections } = FirebaseAPI()
+    const [conversations, setConversations] = useState<{ email: string, data: { username: string } }[]>([])
     const [friend_list, setFriendList] = useState([])
-    const [loader, setloader] = useState(false)
+    const [loader, setloader] = useState(true)
 
     useEffect(() => {
-        const read = async () => {
-            const result = await getAllUsers()
-            // const x = await getFriends()
-            // setFriendList(x)
-            setUsers(result)
-            setloader(true)
+        const getchat = async () => {
+            const result = await getAllFriendConnections()
+            setConversations(result)
+            console.log(result)
+            console.log(await getAllConversations())
+            setloader(false)
         }
-
-        read()
-
+        getchat()
     }, [])
 
 
 
-    // console.log(friend_list)
+
 
 
     return (
         <main>
-            Find a User
-            <Search users={users} />
 
             <section className='un-select has-background-success nav-section'>
-                Friends
-                <MiniLinks />
+                Conversations
+                {loader ? <>
+                    Loading
+                </> : <>
+                    <ul>
+                        {/* {(conversations.length > 0) ? <> */}
+                        {conversations.map((e) => (
+                            <li><Link href={{
+                                pathname: `/dashboard/DirectMessage/channel`,
+                                query: { friend: `${e.email}` }
+                            }}>
+                                <abbr title={e.email}> <b>{e.data.username}</b></abbr>
+
+                            </Link></li>
+                        ))}
+                        {/* </> : <> */}
+
+                        {/* </>} */}
+                    </ul>
+                </>}
+
                 {/* <ul>
                     {loader &&
                         <>

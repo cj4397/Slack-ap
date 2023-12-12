@@ -4,49 +4,106 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
-import { faUser, faComments, faEnvelope, faRightFromBracket, faMagnifyingGlass, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useAuth } from "../firebase/firebaseAuth";
 import FirebaseAPI from "../firebase/firebaseAPI";
 
-import Accordion from "./components/Accordion";
+import AccordionFriends from "./components/AccordionFriends";
+import Loader from "./components/Loader";
+import { onChildChanged, ref } from "firebase/database";
+import AccordionGroups from "./components/AccordionGroups";
 
+import { getDatabase, update, onValue } from "firebase/database";
+
+
+
+
+
+
+interface Friend {
+  email: string, username: string
+}
+
+
+interface Data {
+  messages: string,
+  sender: string,
+  created_at: number
+}
 
 
 export default function DashboardLayout({ children }: { children: React.ReactNode; }) {
 
-  const { user, logout } = useAuth();
-  const { getAllOnlineUsers, getUserDetails } = FirebaseAPI()
-  const path = usePathname()
-  const [friends, setFriends] = useState([])
-  const [groups, setGroups] = useState([])
-  const [accordion, setAccordion] = useState(false)
+  const { user, email, logout } = useAuth();
+  const { getAllOnlineUsers, getUserDetails, db } = FirebaseAPI()
+  const path: string = usePathname()
 
-  console.log(getAllOnlineUsers())
-  console.log(path)
+  const [loader, setLoader] = useState<boolean>(true)
 
+  const [groups, setGroups] = useState<string[]>([])
+  const [friends, setFriends] = useState<Friend[]>([])
   const route = useRouter();
 
+  const [online, setOnline] = useState<string[]>([])
+  const [change, setChange] = useState<boolean>(false)
+  const [detailChange, setDetailChange] = useState<boolean>(false)
+
+  const re_email: string = email.split('.').join('')
+
+  //onChildChanged will get the table /data that has benn changed in the ref
+  onChildChanged(ref(db, '/users'), (snapshot) => {
+    snapshot.forEach((childSnapshot) => {
+
+      const childKey = childSnapshot.key;
+      const childData = childSnapshot.val();
+      let x = false
+      if (childKey === 'email' && online.includes(childData)) {
+        x = true
+      }
+      if (childKey === 'status' && x && childData === "offline") {
+
+        setChange(change ? false : true)
+        console.log(friends)
+      }
+    });
+
+  })
+
+  onChildChanged(ref(db, `/users/${re_email}/friends/request/notification`), () => {
+
+    console.log('add a get request notifier')
+
+  })
+
   useEffect(() => {
-    const give_users = async () => {
+    const getChange = async () => {
       const result = await getUserDetails()
       if (result.friends) {
-        console.log(result.friends)
-        let x: any = []
-        for (const [key, value] of Object.entries(result.friends)) {
-          x.push({ email: key, data: value })
-          console.log(`${key}: ${value}`);
-        }
-        setFriends(x)
+        setFriends(result.friends)
       }
       if (result.groups) {
         setGroups(result.groups)
       }
-      console.log(result)
+
+      setLoader(false)
     }
-    give_users()
-  }, [])
+    setLoader(true)
+    getChange()
+  }, [detailChange])
+
+  useEffect(() => {
+    const getOnline = async () => {
+      setOnline(await getAllOnlineUsers())
+
+      setLoader(false)
+    }
+    setLoader(true)
+    getOnline()
+  }, [change])
+
+
 
   if (user === '') {
 
@@ -54,85 +111,65 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
 
-
-
-
-
+  const connectedRef = ref(db, ".info/connected");
+  onValue(connectedRef, (snap) => {
+    if (snap.val() === true) {
+      console.log("connected");
+    } else {
+      update(ref(db, 'users/' + email.split('.').join('')), {
+        status: 'offline'
+      });
+      console.log("not connected");
+    }
+  });
 
   return (
 
     <main>
+      {loader ? <Loader /> :
+        <>
+          <nav className="has-background-primary un-select side-nav">
+            <div className="is-flex is-justify-content-space-between is-flex-direction-column h-100">
 
-      <nav className="has-background-primary un-select side-nav">
-        <div className="is-flex is-justify-content-space-between is-flex-direction-column h-100">
-
-          <div className="pt-5">
-            <div>
-              <Link href={"/dashboard"} className={`${path === '/dashboard' && 'link-active'} has-text-centered`}>
-                <p ><abbr title="User" className="is-flex is-justify-content-space-around is-align-items-end"><FontAwesomeIcon icon={faUser} size="2x" />
-                  <b className="has-text-black is-size-6">Profile</b></abbr></p>
-              </Link>
-            </div>
-
-            <hr />
-
-            {/* <div >
-              <div onClick={() => setAccordion(accordion ? false : true)} className={`${(path.includes('/dashboard/DirectMessage')) ? 'link-active' : 'has-text-info'} has-text-centered `}>
-                <p> <abbr className="is-flex is-justify-content-space-around is-align-items-end" title="Direct Message"><FontAwesomeIcon icon={faEnvelope} size="2x" />
-                  <b className="has-text-black is-size-6">Message</b></abbr></p>
-              </div>
-
-              <div className={`${accordion ? "accordion-content" : " active-accordion"}`}>
-                <div className={` is-flex is-flex-direction-column is-justify-content-space-between`}>
-                  <ul className="list">
-                    {friends.map((e: any) => (
-                      <li>
-                        <Link href={{
-                          pathname: `/dashboard/DirectMessage/${e.data.username}`,
-                          query: { friend: `${e.email}` },
-                        }}
-                          as={`/dashboard/DirectMessage/${e.data.username}`}>
-
-                          <abbr title={e.email}>{e.data.username}</abbr>
-
-                        </Link>
-
-                      </li>
-                    ))}
-                  </ul>
-                  <button>Send a Message</button>
+              <div className="pt-5">
+                <div>
+                  <Link href={"/dashboard"} className={`${path === '/dashboard' && 'link-active'} has-text-centered`}>
+                    <p ><abbr title="User" className="is-flex is-justify-content-space-around is-align-items-end"><FontAwesomeIcon icon={faUser} size="2x" />
+                      <b className="has-text-black is-size-6">Profile</b></abbr></p>
+                  </Link>
                 </div>
+
+                <hr />
+
+                <AccordionFriends friends={friends} online={online} />
+                <hr />
+
+                <div>
+                  <AccordionGroups groups={groups} online={online} />
+
+                </div>
+
+                <hr />
               </div>
-            
-            </div> */}
-            <Accordion friends={friends} mode={"friends"} />
-            <hr />
 
-            <div>
-              <Link href={"/dashboard/GroupChat"} className={`${path === '/dashboard/GroupChat' && 'link-active'} has-text-centered`}>
-                <p><abbr className="is-flex is-justify-content-space-around is-align-items-end" title="Group Chat"><FontAwesomeIcon icon={faComments} size="2x" />
 
-                  <b className="has-text-black is-size-6">Group Chat</b></abbr></p>
-              </Link>
+              <div className="pb-5">
+                <Link href={"/"} onClick={() => logout()} className="has-text-centered">
+                  <p><abbr className="is-flex is-justify-content-space-around is-align-items-end" title="Sign Out"><FontAwesomeIcon icon={faRightFromBracket} size="2x" />
+
+                    <b className="has-text-black is-size-6">Log Out</b></abbr></p>
+                </Link>
+              </div>
             </div>
 
-            <hr />
+          </nav>
+          <div className="main h-100">
+            {children}
           </div>
+        </>
+      }
 
 
-          <div className="pb-5">
-            <Link href={"/"} onClick={() => logout()} className="has-text-centered">
-              <p><abbr className="is-flex is-justify-content-space-around is-align-items-end" title="Sign Out"><FontAwesomeIcon icon={faRightFromBracket} size="2x" />
-
-                <b className="has-text-black is-size-6">Log Out</b></abbr></p>
-            </Link>
-          </div>
-        </div>
-
-      </nav>
-      <div className="main h-100">
-        {children}
-      </div>
     </main>
 
   );

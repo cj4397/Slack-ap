@@ -63,7 +63,7 @@ nav {
 .nav-section {
   position: fixed;
   width: 15em;
-  left: 6.5em;
+  left: 15em;
   z-index: 5;
   height: 100%;
 }
@@ -90,6 +90,7 @@ nav {
   box-shadow: 0 0.5em 1em -0.125em;
   z-index: 10;
   border-radius: 4px;
+  overflow-y: auto;
 }
 
 .show {
@@ -101,7 +102,6 @@ nav {
 }
 
 .list {
-  list-style: circle;
   padding-left: 3em;
 }
 
@@ -118,6 +118,111 @@ nav {
 
 abbr {
   text-decoration: none;
+}
+
+.online::before {
+  content: "•";
+  color: rgb(0, 117, 0);
+  font-size: 2em;
+  font-weight: 900;
+  display: inline-block;
+  width: 1em;
+  height: 0;
+  margin: -1em 0 0 0;
+}
+
+.spinner {
+  transform: rotateZ(45deg);
+  perspective: 1000px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  color: #fff;
+}
+
+.spinner:before,
+.spinner:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  transform: rotateX(70deg);
+  animation: 1s spin linear infinite;
+}
+
+.spinner:after {
+  color: #FF3D00;
+  transform: rotateY(70deg);
+  animation-delay: 0.4s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateZ(360deg);
+  }
+}
+@keyframes rotateccw {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+@keyframes spin {
+  0%, 100% {
+    box-shadow: 0.2em 0px 0 0px currentcolor;
+  }
+  12% {
+    box-shadow: 0.2em 0.2em 0 0 currentcolor;
+  }
+  25% {
+    box-shadow: 0 0.2em 0 0px currentcolor;
+  }
+  37% {
+    box-shadow: -0.2em 0.2em 0 0 currentcolor;
+  }
+  50% {
+    box-shadow: -0.2em 0 0 0 currentcolor;
+  }
+  62% {
+    box-shadow: -0.2em -0.2em 0 0 currentcolor;
+  }
+  75% {
+    box-shadow: 0px -0.2em 0 0 currentcolor;
+  }
+  87% {
+    box-shadow: 0.2em -0.2em 0 0 currentcolor;
+  }
+}
+.message_box {
+  border-radius: 4px;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 30em;
+  right: 0;
+  z-index: 20;
+  max-width: 100%;
+}
+
+.messenger {
+  width: 60vw;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pointed {
+  cursor: pointer;
 }
 
 /*! bulma.io v0.9.4 | MIT License | github.com/jgthms/bulma */
@@ -10408,6 +10513,14 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 .main {
   padding-left: 15em;
+}
+
+.input::-moz-placeholder {
+  color: #005A82;
+}
+
+.input::placeholder {
+  color: #005A82;
 }
 
 @media screen and (max-width: 768px) {

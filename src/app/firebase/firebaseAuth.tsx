@@ -6,6 +6,7 @@ import { getDatabase, set, ref, update, get, child, serverTimestamp } from 'fire
 import firebase_app from "./config";
 
 
+
 const auth: any = getAuth(firebase_app)
 
 
@@ -39,13 +40,15 @@ export default function FirebaseAuth(props: { children: React.ReactNode }) {
 
 
 
+
     useEffect(() => {
 
-        const unsubscribe = async () => {
-            const result = await onAuthStateChanged(auth, (user) => {
+        const unsubscribe = () => {
+            const result = onAuthStateChanged(auth, (user) => {
                 if (user) {
                     setUser(user);
                     setUserID(user.uid)
+                    setEmail(user.email)
                 } else {
                     setUser('');
                 }
@@ -59,18 +62,19 @@ export default function FirebaseAuth(props: { children: React.ReactNode }) {
 
 
 
-    const signIn = (email: string) => {
-        update(ref(db, 'users/' + email.split('.').join('')), {
+    const signIn = async (email: string) => {
+        await update(ref(db, 'users/' + email.split('.').join('')), {
             status: 'online'
         });
 
-        get(child(dbRef, `users/${email.split('.').join('')}`)).then((snapshot) => {
+        await get(child(dbRef, `users/${email.split('.').join('')}`)).then((snapshot) => {
             if (snapshot.exists()) {
                 console.log(snapshot.val());
                 const result = snapshot.val()
 
-                setEmail(result.email)
+
                 setUserName(result.username)
+
             } else {
                 console.log("No data available");
             }
@@ -80,7 +84,9 @@ export default function FirebaseAuth(props: { children: React.ReactNode }) {
 
     }
 
-    const signUp = (name: string, email: string, uid: string) => {
+    const signUp = (name: string, email: string) => {
+        setUserName(name)
+        // setEmail(email)
         set(ref(db, 'users/' + email.split('.').join('')), {
             username: name,
             email: email,
@@ -92,9 +98,15 @@ export default function FirebaseAuth(props: { children: React.ReactNode }) {
 
 
 
-    const logout = () => {
+    const logout = async () => {
+        await update(ref(db, 'users/' + email.split('.').join('')), {
+            status: 'offline'
+        });
         signOut(auth)
-        setUser('');
+        setUser('')
+        setUserName('')
+        setEmail('')
+
     };
 
     const value = useMemo(
