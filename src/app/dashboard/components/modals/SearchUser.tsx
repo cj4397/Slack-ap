@@ -8,6 +8,12 @@ interface Data {
     username: string
 }
 
+interface List {
+    email: string,
+    username: string,
+    created_at: number
+}
+
 export default function SearchUser(props: {
     setModal: React.Dispatch<React.SetStateAction<boolean>>,
     modal: boolean,
@@ -15,14 +21,14 @@ export default function SearchUser(props: {
 }) {
     const { setModal, modal, friends } = props
     const { sendFriendRequest, getAllUsers } = FirebaseAPI()
-    const [users, setUsers] = useState<{ key: string, data: Data }[]>([])
+    const [users, setUsers] = useState<List[]>([])
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [filteredUsers, setFilteredUsers] = useState<{ key: string, data: Data }[]>([]);
+    const [filteredUsers, setFilteredUsers] = useState<List[]>([]);
     const [noDisplay, setNoDisplay] = useState<boolean>(false)
 
     useEffect(() => {
-        const getUsers = () => {
-            const result = getAllUsers()
+        const getUsers = async () => {
+            const result = await getAllUsers()
 
 
             setUsers(result)
@@ -39,7 +45,7 @@ export default function SearchUser(props: {
             setFilteredUsers([]);
         } else {
             console.log(users);
-            const filtered = users.filter((user) => user.data.username.toLowerCase().includes(e.toLowerCase()));
+            const filtered = users.filter((user) => user.username.toLowerCase().includes(e.toLowerCase()));
             if (filtered.length === 0) {
                 setNoDisplay(true)
             } else {
@@ -75,24 +81,24 @@ export default function SearchUser(props: {
                         </> : <>
                             <ul className=''>
                                 {filteredUsers.map((user) => (
-                                    <li key={user.key}>
-                                        <b>  {user.data.username}</b>
+                                    <li key={user.email}>
+                                        <b>  {user.username}</b>
                                         <br />
                                         <div className='is-flex is-justify-content-space-between'>
-                                            {user.data.email}
+                                            {user.email}
                                             <div >
 
                                                 <Link href={{
                                                     pathname: `/dashboard/DirectMessage/channel`,
-                                                    query: { friend: `${user.key}` }
+                                                    query: { friend: `${user.email}` }
                                                 }}
-                                                    as={`/dashboard/DirectMessage/${user.data.username}`}
+                                                    as={`/dashboard/DirectMessage/${user.username}`}
                                                     className='button'
                                                     onClick={() => setModal(false)}
                                                 >Send a Message
 
                                                 </Link>
-                                                {(!friends.includes(user.key)) && <button className='button' onClick={() => sendFriendRequest(user.key)}>Add as Friend</button>}
+                                                {(!friends.includes(user.email)) && <button className='button' onClick={() => sendFriendRequest(user.email)}>Add as Friend</button>}
 
                                             </div>
 

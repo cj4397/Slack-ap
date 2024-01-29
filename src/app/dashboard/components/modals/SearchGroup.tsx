@@ -9,26 +9,40 @@ interface Data {
     created_at: number
 }
 
+interface Group {
+    officer: boolean,
+}
+
+interface List {
+    email: string,
+    username: string,
+    created_at: number
+}
+
 export default function SearchGroup(props: {
     setModal: React.Dispatch<React.SetStateAction<boolean>>,
     modal: boolean,
-    groups: string[]
+    groups: { name: string, details: Group }[]
 }) {
     const { setModal, modal, groups } = props
     const { sendGroupJoinRequest, getAllGroups } = FirebaseAPI()
-    const [group, setGroup] = useState<{ group: string, members: { emailKey: string, data: Data }[] }[]>([])
+    const [group, setGroup] = useState<{ group: string, details: List }[]>([])
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [filteredUsers, setFilteredUsers] = useState<{ group: string, members: { emailKey: string, data: Data }[] }[]>([]);
+    const [filteredGroups, setFilteredGroups] = useState<{ group: string, details: List }[]>([]);
     const [noDisplay, setNoDisplay] = useState<boolean>(false)
 
     useEffect(() => {
-        const getUsers = () => {
-            const result = getAllGroups(groups)
+        const getGroups = async () => {
+            let groupList: string[] = []
+            groups.forEach((group) => {
+                groupList.push(group.name)
+            })
+            const result = await getAllGroups(groupList)
 
 
             setGroup(result)
         }
-        getUsers()
+        getGroups()
     }, [])
 
     const searcher = (e: string) => {
@@ -37,14 +51,14 @@ export default function SearchGroup(props: {
         }
         setSearchTerm(e)
         if (e.trim() === "") {
-            setFilteredUsers([]);
+            setFilteredGroups([]);
         } else {
 
             const filtered = group.filter((x) => x.group.toLowerCase().includes(e.toLowerCase()));
             if (filtered.length === 0) {
                 setNoDisplay(true)
             } else {
-                setFilteredUsers(filtered);
+                setFilteredGroups(filtered);
             }
             console.log(filtered);
 
@@ -68,25 +82,19 @@ export default function SearchGroup(props: {
                         placeholder="Search users..."
                     />
                     <div className="search-dropdown show">
-                        {(filteredUsers.length === 0 && noDisplay) ? <>
+                        {(filteredGroups.length === 0 && noDisplay) ? <>
                             <p>Can't find such User</p>
 
                         </> : <>
                             <ul className=''>
-                                {filteredUsers.map((g) => (
+                                {filteredGroups.map((g) => (
                                     <li key={g.group}>
                                         <b>  {g.group}</b>
                                         <br />
                                         <div className='is-flex is-justify-content-space-between'>
-                                            <ul>
-                                                {g.members.map((member) => (
-                                                    <li>
-                                                        {member.emailKey}
-                                                    </li>
-
-                                                ))}
-                                            </ul>
-
+                                            <p><b>Creator:</b> {g.details.username}</p><br />
+                                            <p><b>Email:</b> {g.details.email}</p><br />
+                                            <p><b>Created at:</b> {g.details.created_at}</p>
 
                                             <div >
 

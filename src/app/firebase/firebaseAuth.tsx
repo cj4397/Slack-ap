@@ -10,15 +10,21 @@ import firebase_app from "./config";
 const auth: any = getAuth(firebase_app)
 
 
+
 const initialState = {
     userName: '',
     email: '',
+    createdAt: 0,
+    friends: [{ details: { email: '', username: '', created_at: 0 }, name: '' }],
+    groups: [{ details: { officer: false }, name: '' }],
     user: {},
     signIn: (email: string) => { },
     signUp: (name: string, email: string, uid: string) => { },
     logout: () => { },
 };
+
 const AuthContext = createContext(initialState);
+
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {
@@ -30,9 +36,12 @@ export const useAuth = () => {
 export default function FirebaseAuth(props: { children: React.ReactNode }) {
     const [email, setEmail] = useLocalStorage("Email", '');
     const [userName, setUserName] = useLocalStorage("Username", '');
+    const [createdAt, setCreatedAt] = useLocalStorage("CreatedAt", 0);
+    const [friends, setFriends] = useLocalStorage('Friends', [])
+    const [groups, setGroups] = useLocalStorage('Groups', [])
     const [user, setUser]: any = useState('');
     const [loading, setLoading] = useState(true);
-    const [userID, setUserID] = useState('')
+
     const db = getDatabase();
     const dbRef = ref(getDatabase())
 
@@ -47,7 +56,7 @@ export default function FirebaseAuth(props: { children: React.ReactNode }) {
             const result = onAuthStateChanged(auth, (user) => {
                 if (user) {
                     setUser(user);
-                    setUserID(user.uid)
+
                     setEmail(user.email)
                 } else {
                     setUser('');
@@ -71,6 +80,22 @@ export default function FirebaseAuth(props: { children: React.ReactNode }) {
             if (snapshot.exists()) {
                 console.log(snapshot.val());
                 const result = snapshot.val()
+                setCreatedAt(result.created_at)
+                if (result.friends) {
+                    let friendList = []
+                    for (const [key, value] of Object.entries(result.friends)) {
+                        friendList.push({ name: key, details: value })
+                    }
+                    setFriends(friendList)
+                }
+
+                if (result.groups) {
+                    let groupList = []
+                    for (const [key, value] of Object.entries(result.groups)) {
+                        groupList.push({ name: key, details: value })
+                    }
+                    setGroups(groupList)
+                }
 
 
                 setUserName(result.username)
@@ -86,11 +111,11 @@ export default function FirebaseAuth(props: { children: React.ReactNode }) {
 
     const signUp = (name: string, email: string) => {
         setUserName(name)
-        // setEmail(email)
+        setEmail(email)
+        setCreatedAt(serverTimestamp())
         set(ref(db, 'users/' + email.split('.').join('')), {
             username: name,
             email: email,
-            status: 'online',
             created_at: serverTimestamp()
         });
 
@@ -111,16 +136,21 @@ export default function FirebaseAuth(props: { children: React.ReactNode }) {
 
     const value = useMemo(
         () => ({
+            friends,
+            groups,
             signIn,
             signUp,
             user,
             logout,
             email,
-            userName
+            userName,
+            createdAt
         }),
         [user]
     );
 
 
-    return <AuthContext.Provider value={value}>{loading ? <div>Loading...</div> : props.children}</AuthContext.Provider>
+    return <AuthContext.Provider value={value}>
+        {loading ? <div>Loading...</div> : props.children}
+    </AuthContext.Provider>
 }

@@ -9,25 +9,33 @@ interface Message {
     message: string,
     created_at: number
 }
+interface Online {
+    email: string,
+    username: string
+}
+
 export default function page() {
     const { email, userName } = useAuth()
     const searchParams = useSearchParams()
     const groupName = searchParams.get('groupName')
     const [members, setMembers] = useState<{ email: string, username: string }[]>([])
-    const [online, setOnline] = useState<string[]>([])
+    const [online, setOnline] = useState<Online[]>([])
     const [message, setMessage] = useState<Message[]>([])
+    const [officers, setOfficers] = useState<{ email: string, username: string }[]>([])
 
-    const { getGroupMembers, getAllOnlineUsers, getGroupMessages, sendGroupMessage } = FirebaseAPI()
+    const { getGroupDetails, getOnlineUsers, getGroupMessages, sendGroupMessage } = FirebaseAPI()
 
     useEffect(() => {
         const getMembers = async () => {
             if (groupName !== null) {
-                const result = await getGroupMembers(groupName)
+                const result = await getGroupDetails(groupName)
                 const messages = await getGroupMessages(groupName)
                 setMessage(messages)
-                setMembers(result)
+                console.log(result)
+                setMembers(result.members)
+                setOfficers(result.officers)
             }
-            const users = await getAllOnlineUsers()
+            const users = await getOnlineUsers()
             setOnline(users)
         }
         getMembers()

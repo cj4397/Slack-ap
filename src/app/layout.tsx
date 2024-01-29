@@ -2,6 +2,7 @@ import './globals.css'
 
 
 import FirebaseAuth from './firebase/firebaseAuth';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 
 
@@ -20,7 +21,10 @@ export default function RootLayout({
 
 
 
-      <body><FirebaseAuth>{children}</FirebaseAuth></body>
+      <body><FirebaseAuth>{children}</FirebaseAuth>
+            <SpeedInsights />
+      </body>
+
     </html>
   );
 }

@@ -8,7 +8,6 @@ import { onChildChanged, ref } from "firebase/database";
 
 export default function AccordionRequest(props: { list: { email: string, username: string }[], title: string }) {
     const { list, title } = props
-    const [modal, setModal] = useState(false)
     const [accordion, setAccordion] = useState(false)
     const [arrow, setArrow] = useState(<FontAwesomeIcon icon={faChevronDown} size="1x" />)
     const { acceptFriend, db, re_email } = FirebaseAPI()
@@ -26,7 +25,6 @@ export default function AccordionRequest(props: { list: { email: string, usernam
         setLoader(true)
         let x: { username: string, email: string }[] = []
         request.forEach((emailKey) => {
-            // const childKey = emailKey.key;
             const childData = emailKey.val();
             x.push({ username: childData.username, email: childData.email })
         })
@@ -34,9 +32,7 @@ export default function AccordionRequest(props: { list: { email: string, usernam
 
 
     })
-    // useEffect(()=>{
 
-    // },[change])
 
 
     const addFriend = (name: string, email: string) => {

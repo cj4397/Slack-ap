@@ -6,26 +6,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faChevronDown, faChevronUp, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import SearchUser from './modals/SearchUser'
 
-
+interface Online {
+    email: string,
+    username: string
+}
 
 export default function Accordion(
     props: {
-        friends: { email: string, username: string }[],
-        online: string[]
+        friends: { name: string, details: { username: string, email: string, created_at: number } }[],
+        online: Online[]
     }
 ) {
     const { friends, online } = props
     const [modal, setModal] = useState(false)
     const [accordion, setAccordion] = useState(false)
     const [friendList, setFriendList] = useState<string[]>([])
+    const [onlineList, setOnlineList] = useState<string[]>([])
     const path = usePathname()
     const [arrow, setArrow] = useState(<FontAwesomeIcon icon={faChevronDown} size="1x" />)
 
 
     useEffect(() => {
         let x: string[] = []
-        friends.forEach((z) => x.push(z.email))
+        let y: string[] = []
+        friends.forEach((friend) => x.push(friend.details.email))
         setFriendList(x)
+        online.forEach((z) => x.push(z.email))
     }, [])
 
     const accordionActive = () => {
@@ -57,14 +63,14 @@ export default function Accordion(
                         <ul className="list">
                             {(friends.length > 0) ? <>
                                 {friends.map((e) => (
-                                    <li key={e.email} className={`${online.includes(e.email) && 'online'}`}>
+                                    <li key={e.details.email} className={`${onlineList.includes(e.details.email) && 'online'}`}>
                                         <Link href={{
-                                            pathname: `/dashboard/DirectMessage/channel`,
-                                            query: { friendEmail: `${e.email}`, friend: e.username },
+                                            pathname: `/dashboard/DirectMessage`,
+                                            query: { friendEmail: `${e.details.email}`, friend: e.name },
                                         }}
                                         >
 
-                                            <abbr title={e.email}>{e.username}</abbr>
+                                            <abbr title={e.details.email}>{e.name}</abbr>
 
                                         </Link>
 

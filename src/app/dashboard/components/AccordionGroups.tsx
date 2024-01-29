@@ -6,18 +6,18 @@ import Link from 'next/link'
 import SearchGroup from './modals/SearchGroup'
 import CreateGroup from './modals/CreateGroup'
 
-
-interface Data {
-    messages: string,
-    sender: string,
-    created_at: number
+interface Group {
+    officer: boolean,
 }
 
-
+interface Online {
+    email: string,
+    username: string
+}
 
 export default function AccordionGroups(props: {
-    groups: string[],
-    online: string[]
+    groups: { name: string, details: Group }[],
+    online: Online[]
 }) {
     const { groups, online } = props
     const [modal, setModal] = useState(false)
@@ -43,14 +43,14 @@ export default function AccordionGroups(props: {
                     <ul className="list">
                         {(groups.length > 0) ? <>
                             {groups.map((e) => (
-                                <li key={e}>
+                                <li key={e.name}>
                                     <Link href={{
                                         pathname: `/dashboard/GroupChat`,
-                                        query: { groupName: `${e}` },
+                                        query: { groupName: `${e.name}` },
                                     }}
                                     >
 
-                                        <p >{e}</p>
+                                        <p >{e.name}</p>
 
                                     </Link>
 
