@@ -33,7 +33,7 @@ export default function Channel() {
         const getMessages = async () => {
             if (friendEmail !== null && friend !== null) {
                 const result = await getFriendMessages(friendEmail)
-
+                console.log(result)
                 if (result === 'No Conversations made') {
                     setErrorMessage(result)
                 } else {
@@ -157,9 +157,9 @@ export default function Channel() {
                 </>}
 
             <div className='message_box '>
-                <form className='default-form messenger is-flex-direction-row p-0' onSubmit={(e) => handleSubmit(e)}>
-                    <input name='message' className="input is-large is-primary is-focused has-background-grey-lighter" type="text" placeholder="Type a message"></input>
-                    <button type='submit' className='button is-large is-success'>Send</button>
+                <form className='box default-form messenger columns mx-0' onSubmit={(e) => handleSubmit(e)}>
+                    <input name='message' className="input is-large is-primary is-focused has-background-grey-lighter column is-four-fifths" type="text" placeholder="Type a message"></input>
+                    <button type='submit' className='button is-large is-success column'>Send</button>
                 </form>
             </div>
         </div>

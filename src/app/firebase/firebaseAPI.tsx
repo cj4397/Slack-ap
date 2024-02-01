@@ -2,14 +2,20 @@ import React from 'react'
 import { getDatabase, set, ref, get, child, serverTimestamp, remove } from 'firebase/database'
 import { useAuth } from './firebaseAuth'
 
-interface Online {
+export interface Online {
     email: string,
     username: string
 }
 
-interface List {
+export interface List {
     email: string,
     username: string,
+    created_at: number
+}
+export interface Messages {
+    message: string,
+    sender: string,
+    email: string,
     created_at: number
 }
 

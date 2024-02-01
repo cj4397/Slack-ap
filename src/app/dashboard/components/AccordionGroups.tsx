@@ -32,10 +32,12 @@ export default function AccordionGroups(props: {
     }
     return (
         <div >
+
             <div onClick={() => accordionActive()} className={`${(path.includes('/dashboard/GroupChat')) ? 'link-active' : 'has-text-info'} has-text-centered`}>
+
                 <p><abbr className="is-flex is-justify-content-space-around is-align-items-end" title="Group Chat"><FontAwesomeIcon icon={faComments} size="2x" />
 
-                    <b className="has-text-black is-size-6">Group Chat</b>{arrow}</abbr></p>
+                    <b className="has-text-black is-size-6">Group Chat</b><p className='has-text-black'>{arrow}</p></abbr></p>
             </div>
 
             <div className={`${accordion ? "accordion-content" : " active-accordion"}`}>

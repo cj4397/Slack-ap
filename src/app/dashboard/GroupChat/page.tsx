@@ -3,12 +3,9 @@ import React, { useEffect, useState } from 'react'
 import FirebaseAPI from '@/app/firebase/firebaseAPI'
 import { useSearchParams } from 'next/navigation'
 import { useAuth } from '@/app/firebase/firebaseAuth'
+import { Messages } from '@/app/firebase/firebaseAPI'
 
-interface Message {
-    sender: string,
-    message: string,
-    created_at: number
-}
+
 interface Online {
     email: string,
     username: string
@@ -19,8 +16,8 @@ export default function page() {
     const searchParams = useSearchParams()
     const groupName = searchParams.get('groupName')
     const [members, setMembers] = useState<{ email: string, username: string }[]>([])
-    const [online, setOnline] = useState<Online[]>([])
-    const [message, setMessage] = useState<Message[]>([])
+    const [online, setOnline] = useState<string[]>([])
+    const [message, setMessage] = useState<Messages[]>([])
     const [officers, setOfficers] = useState<{ email: string, username: string }[]>([])
 
     const { getGroupDetails, getOnlineUsers, getGroupMessages, sendGroupMessage } = FirebaseAPI()
@@ -36,7 +33,11 @@ export default function page() {
                 setOfficers(result.officers)
             }
             const users = await getOnlineUsers()
-            setOnline(users)
+            let onlineList: string[] = []
+            users.forEach((e) => {
+                onlineList.push(e.email)
+            })
+            setOnline(onlineList)
         }
         getMembers()
     }, [])
@@ -75,15 +76,15 @@ export default function page() {
     const handleSubmit = (e: any) => {
         e.preventDefault()
         if (groupName !== null) {
-            sendGroupMessage(groupName, e.target.message.value, userName, members)
+            sendGroupMessage(groupName, userName, email, e.target.message.value)
         }
     }
 
 
     return (
-        <main>
+        <main className='columns is-gapless h-100'>
 
-            <section className='un-select has-background-light nav-section'>
+            <section id='members' className='un-select has-background-light nav-section column is-one-quarter '>
                 Members
                 <ul className=''>
                     {(members.length > 0) ? <>
@@ -98,50 +99,56 @@ export default function page() {
                 </ul>
             </section>
 
-            <div className='main-section'>
+            <div id='group-messages' className='main-section column '>
                 {(message.length > 0) ?
                     <>
                         {message.map((data) => (
                             <div key={data.created_at}>
-                                {(data.sender !== email) ?
+                                {(data.email !== email) ?
                                     <div className='box '>
+
                                         <strong>{data.sender}</strong> <small>{time(data.created_at)}</small>
-                                        <article className="media">
+                                        <br />
+                                        <small>{data.email}</small>
+                                        <article className="media is-align-items-center">
                                             <figure className="media-left">
                                                 <p className="image is-64x64">
                                                     <img src="https://bulma.io/images/placeholders/128x128.png" />
                                                 </p>
                                             </figure>
+
                                             <div className="media-content">
-                                                <div className="content">
+                                                <div className="content is-flex is-justify-content-flex-start">
                                                     <p>
                                                         {data.message}
                                                     </p>
                                                 </div>
-
                                             </div>
-
                                         </article>
 
 
 
-                                    </div> :
+                                    </div>
+                                    :
                                     <div className='box has-background-info-light'>
 
                                         <div className='has-text-right'>
                                             <strong>{data.sender}</strong> <small>{time(data.created_at)}</small>
+                                            <br />
+                                            <small>{data.email}</small>
                                         </div>
 
-                                        <article className="media ">
+                                        <article className="media is-align-items-center">
 
                                             <div className="media-content">
-                                                <div className="content">
+                                                <div className="content is-flex is-justify-content-flex-end">
                                                     <p className='has-text-right'>
                                                         {data.message}
                                                     </p>
                                                 </div>
 
                                             </div>
+
                                             <figure className="media-right">
                                                 <p className="image is-64x64">
                                                     <img src="https://bulma.io/images/placeholders/128x128.png" />
@@ -149,7 +156,9 @@ export default function page() {
 
                                                 </p>
                                             </figure>
+
                                         </article>
+
 
                                     </div>}
                             </div>
@@ -161,11 +170,11 @@ export default function page() {
 
 
 
-                <div className='message_box '>
+                <div className='message_box'>
 
-                    <form className='default-form messenger is-flex-direction-row p-0' onSubmit={(e) => handleSubmit(e)}>
-                        <input name='message' className="input is-large is-primary is-focused has-background-grey-lighter" type="text" placeholder="Type a message"></input>
-                        <button type='submit' className='button is-large is-success'>Send</button>
+                    <form className=' box messenger columns m-0' onSubmit={(e) => handleSubmit(e)}>
+                        <input name='message' className="input is-large is-primary is-focused has-background-grey-lighter column is-four-fifths" type="text" placeholder="Type a message"></input>
+                        <button type='submit' className='button is-large is-success column'>Send</button>
                     </form>
                 </div>
             </div>

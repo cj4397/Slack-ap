@@ -47,14 +47,14 @@ export default function Accordion(
 
             <div >
 
-                <div className={`${(path.includes('/dashboard/DirectMessage')) ? 'link-active' : 'has-text-info'} has-text-centered `}>
+                <div onClick={() => accordionActive()} className={`${(path.includes('/dashboard/DirectMessage')) ? 'link-active' : 'has-text-info'} has-text-centered `}>
                     <span className='is-flex is-justify-content-space-around is-align-items-end'>
-                        <Link href={'/dashboard/DirectMessage'}>
-                            <abbr className="pointed" title="Direct Message">
-                                <FontAwesomeIcon icon={faEnvelope} size="2x" />
-                                <b className="has-text-black is-size-6 ml-6">Message</b>
-                            </abbr></Link>
-                        <p onClick={() => accordionActive()} className='pointed'>{arrow}</p>
+
+                        <abbr className="pointed" title="Direct Message">
+                            <FontAwesomeIcon icon={faEnvelope} size="2x" />
+                            <b className="has-text-black is-size-6 ml-6">Message</b>
+                        </abbr>
+                        <p className='pointed has-text-black'>{arrow}</p>
                     </span>
                 </div>
 

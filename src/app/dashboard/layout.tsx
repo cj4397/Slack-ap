@@ -173,9 +173,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {loader ? <Loader /> :
         <>
           <SideNav friends={friends} groups={groups} online={online} />
-          <div className="main h-100">
+          <div className="main h-100vh">
             <TopNav />
-            <div id="main">
+            <div id="main" className=" h-100">
               {children}
             </div>
 
