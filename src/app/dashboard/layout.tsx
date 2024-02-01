@@ -10,10 +10,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../firebase/firebaseAuth";
 import FirebaseAPI from "../firebase/firebaseAPI";
 
-import AccordionFriends from "./components/AccordionFriends";
+
 import Loader from "./components/Loader";
 import { onChildAdded, onChildChanged, ref } from "firebase/database";
-import AccordionGroups from "./components/AccordionGroups";
+
 
 import { getDatabase, update, onValue } from "firebase/database";
 import TopNav from "./components/TopNav";
