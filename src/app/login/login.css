@@ -199,3 +199,36 @@ login.ghost:hover {
     height: 40px;
     width: 40px;
 }
+
+.form {
+    background-color: #1E282D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+}
+
+.form>input {
+    background-color: #A09B8C;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+    color: #091428
+}
+
+.form>input::placeholder {
+    color: #0A1428
+}
+
+.form>button {
+    color: #C8AA6E;
+    font-size: larger;
+    padding: 10px;
+    background-color: transparent;
+    border: 2px solid #C89B3C;
+    border-radius: 5px;
+}

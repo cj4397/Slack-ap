@@ -47,7 +47,7 @@ export default function Login() {
                 <div className={`container ${slide ? 'right-panel-active' : ''}`} id="sidebar">
                     <div className="form-container sign-up-container">
 
-                        <form onSubmit={handleSubmitSignUp} autoComplete="on">
+                        <form className="form" onSubmit={handleSubmitSignUp} autoComplete="on">
                             <h1>Create Account</h1>
 
 
@@ -59,7 +59,7 @@ export default function Login() {
                     </div>
                     <div className="form-container sign-in-container">
 
-                        <form onSubmit={handleSubmitSignIn}>
+                        <form className="form" onSubmit={handleSubmitSignIn}>
                             <h1>Sign in</h1>
 
 
