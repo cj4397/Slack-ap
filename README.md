@@ -29,11 +29,12 @@ a mockup project in making a messaging web App
 ## Features
 
 - user authentication
----> no email verification
+---> no email verification (any email that has a "@" as a word separator and ending with ".com")
 - User profile
-- Sending/Receining message to/from a user and saving the conversation in a private channel
+- Sending/Receiving message to/from a user and saving the conversation in a private channel
 - User can see online friends
-- 
+- Can create group
+- User have Notification system
 
 
 ## Deployment
